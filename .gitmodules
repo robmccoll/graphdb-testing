@@ -1,0 +1,3 @@
+[submodule "lib/flockdb"]
+	path = lib/flockdb
+	url = https://github.com/twitter/flockdb.git
