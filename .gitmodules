@@ -1,3 +1,6 @@
 [submodule "lib/flockdb"]
 	path = lib/flockdb
 	url = https://github.com/twitter/flockdb.git
+[submodule "lib/networkx"]
+	path = lib/networkx
+	url = git://github.com/networkx/networkx.git
