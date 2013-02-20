@@ -1,7 +1,7 @@
-graphdb-testing
-===============
+Graph Package Testing
+=====================
 
-The goal of this project is to benchmakr various graph databases, engines, datastructures, 
+The goal of this project is to benchmark various graph databases, engines, datastructures, 
 and data stores. The packages below will be measured in terms of performance on these graph 
 algorithms which are all fairly basic and cover a reasonable range of styles (data structure
 modification, breadth first traversal, edge-parallel, and bulk-synchronous parallel).
