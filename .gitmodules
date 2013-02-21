@@ -4,3 +4,6 @@
 [submodule "lib/networkx"]
 	path = lib/networkx
 	url = git://github.com/networkx/networkx.git
+[submodule "lib/boost"]
+	path = lib/boost
+	url = https://github.com/ryppl/boost-svn.git
