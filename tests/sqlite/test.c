@@ -24,6 +24,12 @@ print_result(void *NotUsed, int argc, char ** argv, char **azColName) {
   return 0;
 }
 
+static int
+get_count(void * count, int argc, char ** argv, char **azColName) {
+  *((int64_t *)count) = atol(argv[0]);
+  return 0;
+}
+
 int main(int argc, char *argv[]) {
   if(argc < 3) {
     E_A(Not enough arguments. Usage %s graphfile actionsfile, argv[0]);
@@ -102,12 +108,16 @@ int main(int argc, char *argv[]) {
   V(Setting up connected components...);
 
   DB_OR_DIE("DROP TABLE IF EXISTS components");
-  DB_OR_DIE("CREATE TABLE components (vtx BIGINT NOT NULL, label BIGINT NOT NULL)");
-  DB_OR_DIE("CREATE UNIQUE INDEX IF NOT EXISTS pairs ON components (vtx)");
+  DB_OR_DIE("CREATE TABLE components (vtx BIGINT UNIQUE, label BIGINT)");
+  DB_OR_DIE("CREATE UNIQUE INDEX IF NOT EXISTS pairs ON components (vtx, label)");
+  DB_OR_DIE("CREATE UNIQUE INDEX IF NOT EXISTS pairs ON components (vtx, label)");
+  DB_OR_DIE("CREATE UNIQUE INDEX IF NOT EXISTS src ON components (vtx)");
 
   DB_OR_DIE("DROP TABLE IF EXISTS components_new");
-  DB_OR_DIE("CREATE TABLE components_new (vtx BIGINT NOT NULL, label BIGINT NOT NULL)");
-  DB_OR_DIE("CREATE UNIQUE INDEX IF NOT EXISTS pairs ON components_new (vtx)");
+  DB_OR_DIE("CREATE TABLE components_new (vtx BIGINT UNIQUE, label BIGINT)");
+  DB_OR_DIE("CREATE UNIQUE INDEX IF NOT EXISTS pairs ON components_new (vtx, label)");
+  DB_OR_DIE("CREATE UNIQUE INDEX IF NOT EXISTS src ON components_new (vtx)");
+  DB_OR_DIE("CREATE INDEX IF NOT EXISTS labels ON components_new (label)");
 
   for(uint64_t v = 0; v < nv; v++) {
       sprintf(sqlcmd, "INSERT INTO components (vtx, label) VALUES (%ld, %ld)", v, v);
@@ -116,24 +126,29 @@ int main(int argc, char *argv[]) {
       DB_OR_DIE(sqlcmd);
   }
 
+  uint64_t old_count = nv;
+  uint64_t iter = 0;
   while(1) {
-    DB_OR_DIE("UPDATE components_new SET label = IFNULL(( "
+    DB_OR_DIE("UPDATE components_new SET label = ( "
         "SELECT MIN(CASE WHEN src.label > dst.label THEN dst.label ELSE src.label END) "
         "FROM edges "
         "LEFT JOIN components AS src ON edges.src = src.vtx "
         "LEFT JOIN components AS dst ON edges.dst = dst.vtx "
-        "WHERE components_new.vtx = src.vtx AND src.label != dst.label "
+        "WHERE components_new.vtx = src.vtx "
         "GROUP BY edges.src "
-        "), vtx)");
-
-    int rows_affected = sqlite3_changes(db);
-    printf("\tAffected %d rows\n", rows_affected);
-
-    if(rows_affected < 1)
-      break;
+        ")");
 
     DB_OR_DIE("DELETE FROM components");
-    DB_OR_DIE("INSERT INTO components SELECT * FROM components_new");
+    DB_OR_DIE("INSERT INTO components SELECT components_new.vtx, IFNULL(components_new.label, components_new.vtx)  FROM components_new");
+
+    int64_t new_count = 0;
+    sqlite3_exec(db, "SELECT COUNT(DISTINCT label) FROM components", get_count, &new_count, &zErrMsg);
+
+    printf("\tIteration %ld: Count is %ld\n", iter, new_count);
+    if(old_count == new_count)
+      break;
+    else
+      old_count = new_count;
   }
 
   if(SQLITE_OK != sqlite3_exec(db, 
