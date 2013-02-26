@@ -1,4 +1,5 @@
 #include    "sqlite3.h"
+#include    "timer.h"
 
 #include  <stdio.h>
 #include  <stdlib.h>
@@ -30,10 +31,18 @@ get_count(void * count, int argc, char ** argv, char **azColName) {
   return 0;
 }
 
+static int
+get_double(void * rtn, int argc, char ** argv, char **azColName) {
+  *((double *)rtn) = atof(argv[0]);
+  return 0;
+}
+
 int main(int argc, char *argv[]) {
   if(argc < 3) {
     E_A(Not enough arguments. Usage %s graphfile actionsfile, argv[0]);
   }
+
+  int64_t iter = 0;
 
   V(Loading graph...);
 
@@ -106,6 +115,7 @@ int main(int argc, char *argv[]) {
   free(off); free(ind); free(wgt);
 
   V(Setting up connected components...);
+  tic();
 
   DB_OR_DIE("DROP TABLE IF EXISTS components");
   DB_OR_DIE("CREATE TABLE components (vtx BIGINT UNIQUE, label BIGINT)");
@@ -118,6 +128,11 @@ int main(int argc, char *argv[]) {
   DB_OR_DIE("CREATE UNIQUE INDEX IF NOT EXISTS pairs ON components_new (vtx, label)");
   DB_OR_DIE("CREATE UNIQUE INDEX IF NOT EXISTS src ON components_new (vtx)");
   DB_OR_DIE("CREATE INDEX IF NOT EXISTS labels ON components_new (label)");
+  
+  printf("\tDone %lf\n", toc());
+
+  V(Performing connected components...);
+  tic();
 
   for(uint64_t v = 0; v < nv; v++) {
       sprintf(sqlcmd, "INSERT INTO components (vtx, label) VALUES (%ld, %ld)", v, v);
@@ -127,7 +142,7 @@ int main(int argc, char *argv[]) {
   }
 
   uint64_t old_count = nv;
-  uint64_t iter = 0;
+  iter = 0;
   while(1) {
     DB_OR_DIE("UPDATE components_new SET label = ( "
         "SELECT MIN(CASE WHEN src.label > dst.label THEN dst.label ELSE src.label END) "
@@ -151,16 +166,19 @@ int main(int argc, char *argv[]) {
       old_count = new_count;
   }
 
-  if(SQLITE_OK != sqlite3_exec(db, 
-    "SELECT COUNT(DISTINCT `label`) AS numComp FROM components", print_result, 0, &zErrMsg)) {
-    E(Creating edge table failed);
-  }
+  printf("\tDone %lf\n", toc());
 
   V(Setting up BFS...);
+  tic();
 
   DB_OR_DIE("DROP TABLE IF EXISTS distance");
   DB_OR_DIE("CREATE TABLE distance (vtx BIGINT NOT NULL, dist BIGINT NOT NULL)");
   DB_OR_DIE("CREATE UNIQUE INDEX IF NOT EXISTS nv ON distance (vtx)");
+
+  printf("\tDone %lf\n", toc());
+
+  V(Performing BFS...);
+  tic();
 
   uint64_t dist = 0;
   uint64_t start = nv / 4;
@@ -187,7 +205,71 @@ int main(int argc, char *argv[]) {
     dist++;
   }
 
+  printf("\tDone %lf\n", toc());
+
+  V(Setting up PageRank...);
+  tic();
+
+  DB_OR_DIE("DROP TABLE IF EXISTS outdegree");
+  DB_OR_DIE("CREATE TABLE outdegree (vtx BIGINT NOT NULL, degree BIGINT NOT NULL) ");
+  DB_OR_DIE("CREATE INDEX IF NOT EXISTS deg ON outdegree (vtx, degree)");
+
+  DB_OR_DIE("DROP TABLE IF EXISTS pagerank");
+  DB_OR_DIE("CREATE TABLE pagerank (vtx BIGINT NOT NULL, pagerank DOUBLE NOT NULL) ");
+  DB_OR_DIE("CREATE UNIQUE INDEX IF NOT EXISTS nv ON pagerank (vtx)");
+
+  DB_OR_DIE("DROP TABLE IF EXISTS pagerank_new");
+  DB_OR_DIE("CREATE TABLE pagerank_new (vtx BIGINT NOT NULL, pagerank DOUBLE NOT NULL) ");
+  DB_OR_DIE("CREATE UNIQUE INDEX IF NOT EXISTS nv ON pagerank_new (vtx)");
+
+  /* Give this for free - we could count this as part of datastructure init */
+  DB_OR_DIE("INSERT INTO outdegree (vtx, degree) SELECT src, COUNT(src) FROM edges GROUP BY src");
+
+  printf("\tDone %lf\n", toc());
+
+  V(Performing PageRank...);
+  tic();
+
+  double startPR = 1.0 / ((double)nv);
+  sprintf(sqlcmd, "INSERT INTO pagerank (vtx, pagerank) SELECT DISTINCT src, %lf FROM edges", startPR);
+  DB_OR_DIE(sqlcmd);
+
+  double delta = 1.0;
+  double epsilon = 0.000001;
+  double dampingfactor = 0.85;
+  double damping = (1.0 - dampingfactor) / ((double)nv);
+
+  uint64_t maxiter = 100;
+  iter = maxiter;
+
+  while (delta > epsilon && iter > 0) {
+    DB_OR_DIE("INSERT INTO pagerank_new (vtx, pagerank) "
+	      "SELECT edges.src, SUM(pagerank/degree) AS newPR "
+	      "FROM edges "
+	      "LEFT JOIN pagerank ON edges.dst = pagerank.vtx "
+	      "LEFT JOIN outdegree ON edges.dst = outdegree.vtx "
+	      "GROUP BY edges.src");
+
+    sprintf(sqlcmd, "UPDATE pagerank_new SET pagerank = %lf * pagerank + %lf", dampingfactor, damping);
+    DB_OR_DIE(sqlcmd);
+
+    sqlite3_exec(db,"SELECT SUM(ABS(pagerank.pagerank-pagerank_new.pagerank)) AS delta "
+	      "FROM pagerank "
+	      "LEFT JOIN pagerank_new ON pagerank.vtx = pagerank_new.vtx;", get_double, &delta, &zErrMsg);
+
+    DB_OR_DIE("DELETE FROM pagerank");
+    DB_OR_DIE("INSERT INTO pagerank SELECT * FROM pagerank_new");
+    DB_OR_DIE("DELETE FROM pagerank_new");
+
+    printf("\tdelta: %lf\n", delta);
+    printf("\titer: %ld\n", maxiter - iter + 1);
+    iter--;
+  }
+
+  printf("\tDone %lf\n", toc());
+
   V(Reading actions...)
+  tic();
   
   fp = fopen(argv[2], "r");
 
@@ -208,9 +290,35 @@ int main(int argc, char *argv[]) {
 
   fclose(fp);
 
-  V(Insert remove test...)
+  printf("\t%ld actions read\n", na);
 
-  //TODO
+  printf("\tDone %lf\n", toc());
+
+  V(Insert remove test...)
+  tic();
+
+  for(uint64_t a = 0; a < na; a++) {
+    int64_t i = actions[2*a];
+    int64_t j = actions[2*a+1];
+
+    /* is insertion? */
+    if(i >= 0) {
+      sprintf(sqlcmd, "INSERT INTO edges (src, dst) VALUES (%ld, %ld)", i, j);
+      DB_OR_DIE(sqlcmd);
+      sprintf(sqlcmd, "INSERT INTO edges (src, dst) VALUES (%ld, %ld)", j, i);
+      DB_OR_DIE(sqlcmd);
+    } else {
+      i = ~i;
+      j = ~j;
+
+      sprintf(sqlcmd, "DELETE FROM edges WHERE src = %ld AND dst = %ld", i, j);
+      DB_OR_DIE(sqlcmd);
+      sprintf(sqlcmd, "DELETE FROM edges WHERE src = %ld AND dst = %ld", j, i);
+      DB_OR_DIE(sqlcmd);
+    }
+  }
+
+  printf("\tDone %lf\n", toc());
 
   V(Closing db...);
   sqlite3_close(db);
