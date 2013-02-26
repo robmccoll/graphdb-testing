@@ -155,8 +155,6 @@ int main(int argc, char *argv[]) {
 
   printf("\tDone %lf\n", toc());
 
-  pause();
-
   V(Reading actions...)
   tic();
   
