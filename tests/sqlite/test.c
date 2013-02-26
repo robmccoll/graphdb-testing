@@ -98,16 +98,19 @@ int main(int argc, char *argv[]) {
   }
 
   if(SQLITE_OK != sqlite3_exec(db, 
-    "CREATE TABLE edges (src BIG INT NOT NULL, dst BIG INT NOT NULL)", NULL, 0, &zErrMsg)) {
+    "CREATE TABLE edges (src BIG INT NOT NULL, dst BIG INT NOT NULL, wgt BIT INT NOT NULL)", NULL, 0, &zErrMsg)) {
     E(Creating edge table failed);
   }
+  DB_OR_DIE("CREATE UNIQUE INDEX IF NOT EXISTS edgepairs ON edges (src, dst)");
+  DB_OR_DIE("CREATE INDEX IF NOT EXISTS edgesrcs ON edges (src)");
+  DB_OR_DIE("CREATE INDEX IF NOT EXISTS edgedsts ON edges (dst)");
 
   V(Loading data into edges table...);
   char sqlcmd[1024];
 
   for(uint64_t v = 0; v < nv; v++) {
     for(uint64_t i = off[v]; i < off[v+1]; i++) {
-      sprintf(sqlcmd, "INSERT INTO edges (src, dst) VALUES (%ld, %ld)", v, ind[i]);
+      sprintf(sqlcmd, "INSERT OR IGNORE INTO edges (src, dst, wgt) VALUES (%ld, %ld, %ld)", v, ind[i], wgt[i]);
       DB_OR_DIE(sqlcmd);
     }
   }
@@ -120,8 +123,8 @@ int main(int argc, char *argv[]) {
   DB_OR_DIE("DROP TABLE IF EXISTS components");
   DB_OR_DIE("CREATE TABLE components (vtx BIGINT UNIQUE, label BIGINT)");
   DB_OR_DIE("CREATE UNIQUE INDEX IF NOT EXISTS pairs ON components (vtx, label)");
-  DB_OR_DIE("CREATE UNIQUE INDEX IF NOT EXISTS pairs ON components (vtx, label)");
   DB_OR_DIE("CREATE UNIQUE INDEX IF NOT EXISTS src ON components (vtx)");
+  DB_OR_DIE("CREATE INDEX IF NOT EXISTS labels ON components (label)");
 
   DB_OR_DIE("DROP TABLE IF EXISTS components_new");
   DB_OR_DIE("CREATE TABLE components_new (vtx BIGINT UNIQUE, label BIGINT)");
@@ -235,7 +238,7 @@ int main(int argc, char *argv[]) {
   DB_OR_DIE(sqlcmd);
 
   double delta = 1.0;
-  double epsilon = 0.000001;
+  double epsilon = 1e-8;
   double dampingfactor = 0.85;
   double damping = (1.0 - dampingfactor) / ((double)nv);
 
@@ -303,9 +306,9 @@ int main(int argc, char *argv[]) {
 
     /* is insertion? */
     if(i >= 0) {
-      sprintf(sqlcmd, "INSERT INTO edges (src, dst) VALUES (%ld, %ld)", i, j);
+      sprintf(sqlcmd, "INSERT OR IGNORE INTO edges (src, dst, wgt) VALUES (%ld, %ld, 1) ", i, j);
       DB_OR_DIE(sqlcmd);
-      sprintf(sqlcmd, "INSERT INTO edges (src, dst) VALUES (%ld, %ld)", j, i);
+      sprintf(sqlcmd, "INSERT OR IGNORE INTO edges (src, dst, wgt) VALUES (%ld, %ld, 1) ", j, i);
       DB_OR_DIE(sqlcmd);
     } else {
       i = ~i;
