@@ -7,3 +7,6 @@
 [submodule "lib/boost"]
 	path = lib/boost
 	url = https://github.com/ryppl/boost-svn.git
+[submodule "lib/arangodb"]
+	path = lib/arangodb
+	url = https://github.com/triAGENS/ArangoDB.git
