@@ -1,0 +1,11 @@
+# Doxyfile 1.7.4
+
+# This is the doxyfile for generating MTGL doxygen documentation for the trac
+# wiki.  We include the standard doxyfile and reset some of the configuration
+# settings to make things look better on the wiki.
+
+@INCLUDE = Doxyfile
+
+HTML_HEADER            = TracHeader.html
+HTML_FOOTER            = TracFooter.html
+SEARCHENGINE           = NO

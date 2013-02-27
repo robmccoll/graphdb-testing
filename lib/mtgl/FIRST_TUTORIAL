@@ -1,0 +1,128 @@
+This tutorial will help get you started with using MTGL. You may also refer
+to https://software.sandia.gov/trac/mtgl for other tutorials.
+
+We'll assume that you're on the XMT.
+
+1) To build on the XMT:
+
+$ ./configure
+
+   Dont' type "make" yet!  XMT compilation is really slow, and we don't need
+   to build all of the tests.
+
+2)  To prepare for snapshotting graphs in and out:
+
+$ fsworker &
+
+   This will print two numbers that look like:
+
+[1] 12869
+$ 1001af
+
+   The first number is the process id, and the second is the worker endpoint.
+   You need to set the following environment variables, replacing with the
+   numbers reported when you ran fsworker:
+
+$ export SWORKER_PID=12869; export SWORKER_EP=1001af
+
+3)  Generate a graph:  We'll generate a directed "r-mat" graph
+                       ("R-MAT: A recursive model for graph mining" by
+                        Chakrabarti, Zhan, and Faloutsos)
+
+$ cd test
+$ make graph2file
+$ mtarun -m 4 graph2file
+
+SYNTAX
+    graph2file { generator | filename } outfile
+
+DESCRIPTION
+    Specifying a generator uses the specified generator to generate a graph,
+    and specifying filename reads the graph from a file.
+
+GENERATORS
+    rmat p
+        Generates an R-MAT graph with 2^p vertices.
+
+    er n p
+        Generates an Erdos-Renyi graph with n vertices and edge probability
+        p.
+
+FILE FORMATS
+    '.dimacs'             Indicates the DIMACS format.
+    '.mtx'                Indicates the MatrixMarket format.
+    '.srcs' and '.dests'  Indicates the sources/dests binary format.
+    '.mmap'               Indicates a graph that has been mmapped into memory.
+
+TEST SPECIFIC ARGUMENTS
+    outfile
+        Name of the output file. Suffix determines type: .mtx -> Matrix Market
+        .dimacs -> Dimacs .srcs -> Srcs / Dests
+
+$ mtarun -m 4 graph2file rmat 10 /scratch/rmat-10.srcs
+$ ls /scratch/rmat-10*
+  /scratch/rmat-10.dests        /scratch/rmat-10.srcs
+
+These two files contain the sources and destinations of the edges, written in
+a binary format that is quick to read in and out from disk, for an r-mat graph
+of 1000 vertices.
+
+3) Run an algorithm:  we'll try connected components.
+
+$ make test_cc
+$ mtarun -m 4 ./test_cc /scratch/rmat-10.srcs
+Graph constructed with 1009 vertices and 8069 edges.
+gcc_sv time: 0.0329778
+There are 187 connected components.
+sv time (going through edges): 0.00478598
+There are 187 connected components.
+
+This read in the graph via snapshot, created an undirected version of the
+graph, and ran two different connected components algorithms on it.
+
+4) Generate a custom graph for debugging purposes
+
+   Often, we'll want to run on some small graph for debugging.  Here's
+   a convenient way to generate one in a format that can be snapshotted in.
+   Instead of running graph2file, we'll run custom2file.  This will read
+   a simple file format and produce snapshot-able srcs and dests files.
+
+   Example:  Put your directed edges into a text file (test.s in this case).
+             Use vertex names in 0..n-1.  The custom2file program is currently
+             set up to generate directed graphs, but this can be changed
+             by editing custom2file.cpp and changing the directedS template
+             parameter of compressed_sparse_row_graph to undirectedS or
+             bidirectionalS.
+
+        $ cat test.s
+        0 1
+        1 2
+        2 0
+
+   Now we'll generate the files we need for snapshot:
+
+$ mtarun -m 1 custom2file /scratch/test_graph snapshot < test.s
+custom2file...
+0 1
+1 2
+2 0
+Writing SNAPSHOT files...
+
+   And finally, we can run on our custom input:
+
+$mtarun -m 4 test_cc /scratch/test_graph.srcs
+0 : { {0}(0, 1) {2}(0, 2) }
+1 : { {1}(1, 2) {0}(1, 0) }
+2 : { {2}(2, 0) {1}(2, 1) }
+gcc_sv time: 0.640024
+There are 1 connected components.
+sv time (going through edges): 0.00179001
+There are 1 connected components.
+
+5) View the tutorials on the wiki, especially "Getting Started with the MTGL".
+   (https://software.sandia.gov/trac/mtgl/wiki/MtglTutorials)
+
+6) Doxygen documentation can be generated as follows:
+
+  $ cd doc
+  $ doxygen

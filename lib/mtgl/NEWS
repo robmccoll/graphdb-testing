@@ -1,0 +1,78 @@
+----- 1.1.1 -----
+New Features:
+ - Added accumulate_out_degree() and accumulate_in_degree() to simplify manual
+   manhattan partitioning.
+Improvements:
+ - Functions in partioning.hpp are now in the MTGL namespace.
+ - Configure now supports --with-openmp option.
+Bugfixes:
+ - Bug in has_eulerian_circuit() where a loop used the wrong bounds.
+ - SIZEOF_ macros now always defined only once.
+ - Bug in read_dimacs() where one loop wasn't parallelized on the XMT.
+ - Bug where test harness didn't completely support OpenMP.
+ - Memory leak in Qthreads and OpenMP implmentation of sort().
+
+----- 1.1 -----
+New Features:
+ - Added 1D block and 2D manhattan manual partitioning functions.
+ - Added a thread iterator interface to the graphs.
+ - Added an implementation of STINGER and an MTGL adapter for it.
+ - Added a parallelized Qthreads and OpenMP sort.
+ - Added algorithm.hpp  and numeric.hpp to provide some functionality of the
+   STL equivalents.  Only a few algorithms are currently supported.
+ - Added an implementation of the Edmonds-Karp max-flow algorithm.
+ - Added the badrank algorithm.
+ - Added duplicate_euler_tour() to simplify getting an euler tour through a
+   non-eulerian graph.
+Improvements:
+ - Got rid of get_vertex() and get_edge() as they duplicated functionality
+   already available in the interface.
+ - Got rid of other() as it does not fit with the BGL manner of iteration.
+ - Improved scaling of triangles algorithm on the UV in certain situations.
+ - Compressed_sparse_row_graph now supports Qthreads and OpenMP.
+ - Parallelized the write_*() family of functions.
+ - Renamed the hash structure's range_iterator to thread_iterator to match
+   the name used with graphs.
+ - Updated the make process to be more standard and added a couple of targets.
+ - Updated the test harness to support OpenMP and specifying the number of
+   threads for Qthreads and OpenMP.
+ - Refactored the following interfaces:
+   - badrank
+   - breadth first search
+   - euler tour
+   - independent set
+   - pagerank
+   - random walk
+   - subgraph isomorphism
+ - Updated the following algorithms to use the new thread iterators and
+   partitioning scheme: 
+    - badrank
+    - breadth first search
+    - connected components
+    - independent set
+    - pagerank
+    - pseudo diameter
+    - vertex betweenness
+ - Updated the following algorithms to not require vertices and edges to have
+   ids:
+    - badrank
+    - breadth first search
+    - pagerank
+    - pseudo diameter
+    - vertex betweenness
+ - Updated the following algorithms to support Qthreads:
+    - badrank
+    - breadth first search
+    - pagerank
+    - pseudo diameter
+    - vertex betweenness
+Bugfixes:
+ - Several bugs related to using dynamic_array compiled with bounds checking
+   enabled.
+ - Independent set no longer dies on the XMT.
+ - Initializing subgraphs on Windows now works.
+ - All test now build on the XMT, Linux, and OS X.
+ - Got rid of several memory leaks.
+
+----- 1.0 -----
+First release of MTGL.

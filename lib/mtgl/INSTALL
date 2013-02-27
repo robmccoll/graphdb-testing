@@ -1,0 +1,91 @@
+1. MTGL
+
+1.1 Installing MTGL
+
+MTGL follows the standard installation method of Unix-like systems.  For those
+unfamiliar with this, the short version is to issue the following commands
+from the root MTGL directory:
+
+  ./configure --prefix=<mtgl_install_dir>
+  make install
+
+If you are an administrator and want to install in the default location
+(/usr/local), then don't include the '--prefix' option.  Note that nothing
+actually happens in the make step because the library is just a bunch of
+header files that need to be copied.
+
+1.2 Building the tests and tutorials
+
+The MTGL includes some tests of its algorithms.  The tests show examples
+of using the algorithms in the MTGL and allow testing of the algorithms
+and data structures.  The MTGL also includes some tutorial files.  Building
+the tests or tutorials is not a required step to utilize the MTGL as a
+library.  In fact, building the tests and tutorials takes quite a while on
+the XMT, so you probably don't want to build unless you need to.
+
+The tests are located in the test/ subdirectory of the checkout.  The
+tutorials are located in the tutorial/ subdirectory of the checkout.  There
+are three targets for building the tests and tutorials:
+
+  buildtests    Make the standard tests.
+  buildall      Make all the tests.
+  tutorial      Make the tutorial programs.
+
+Run
+
+  make <target>
+
+from the main directory of the checkout to build the chosen target.
+
+To build an individual test or tutorial, run
+
+  make <file_prefix>
+
+from the appropriate subdirectory, where <file_prefix> is the part of the file
+before the .cpp.  For example,
+
+  make test_connected_components
+  
+will build the test of the connected components algorithm located in
+test_connected_components.cpp.
+
+
+2. Qthreads
+
+Sandia's Qthreads library allows the MTGL to be run using multiple threads
+on non-XMT systems.
+
+2.1 Get the Software
+
+Download the latest Qthreads library from its webpage,
+https://code.google.com/p/qthreads/.  These instructions assume you are
+using Qthreads version 1.5 or later.
+
+2.2 Installing Qthreads
+
+Before using MTGL with Qthreads, the library needs to be installed.
+Qthreads follows the standard installation method of Unix-like systems.
+For those unfamiliar with this, the short version is to issue the following
+commands from the directory where you unzipped Qthreads:
+
+  ./configure --prefix=<qthread_install_dir>
+  make
+  make install
+
+If you are an administrator and want to install in the default location
+(/usr/local), then don't include the '--prefix' option.  If you need more
+help read the INSTALL file included with Qthreads.
+
+2.3 Configure the MTGL to Use Qthreads
+
+Once Qthreads is built and installed, you can configure the MTGL library
+to use it.
+
+From the MTGL trunk, run 'autoreconf -ifs' if you haven't already.  Next,
+run configure with the following options:
+
+  ./configure --with-qthreads[=qthreads_install_dir]
+
+If you installed Qthreads in the default directory, you don't need to
+include '=qthreads_install_dir'.  Otherwise, give the directory in which
+you installed Qthreads.
