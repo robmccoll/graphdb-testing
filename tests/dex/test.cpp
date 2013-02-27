@@ -22,6 +22,8 @@ extern "C" {
 using namespace dex::gdb;
 using namespace dex::algorithms;
 
+/* to fix ambiguity issues - its this or be totally verbose on 
+ * namespaces. c++ is fun */
 typedef long int int64;
 typedef long unsigned int uint64;
 
@@ -91,8 +93,7 @@ int main(int argc, char *argv[])
     }
   }
 
-  delete value;
-
+#if 0
   V(Shiloach-Vishkin  Connected components...)
   std::map<oid_t, int64> components;
 
@@ -108,10 +109,10 @@ int main(int argc, char *argv[])
     delete vtxObjects;
   }
 
+  Objects * edgeObjects = graph->Select(edgeType);
   while(1) {
     uint64 changed = 0;
 
-    Objects * edgeObjects = graph->Select(edgeType);
     ObjectsIterator * edges = edgeObjects->Iterator();
 
     while(edges->HasNext()) {
@@ -126,7 +127,6 @@ int main(int argc, char *argv[])
     }
 
     delete edges;
-    delete edgeObjects;
 
     if(!changed)
       break;
@@ -136,6 +136,7 @@ int main(int argc, char *argv[])
 	components[i] = components[components[i]];
     }
   }
+  delete edgeObjects;
 
   printf("\tDone %lf\n", toc());
 
@@ -155,6 +156,161 @@ int main(int argc, char *argv[])
   }
 
   printf("\tDone %lf\n", toc());
+
+  V(PageRank...);
+
+  std::map<oid_t,double> tmp_pr;
+  std::map<oid_t,double> pr;
+  double epsilon = 1e-8;
+  double dampingfactor = 0.85;
+  int64 maxiter = 100;
+  tic();
+
+  Objects * vtxObjects = graph->Select(vtxType);
+  {
+    ObjectsIterator * vtx = vtxObjects->Iterator();
+    while(vtx->HasNext()) {
+      oid_t cur = vtx->Next();
+      pr[cur] = 1/((double)nv);
+    }
+    delete vtx;
+  }
+
+  int64 iter = maxiter;
+  double delta = 1;
+
+  while(delta > epsilon && iter > 0) {
+    {
+      ObjectsIterator * vtx = vtxObjects->Iterator();
+      while(vtx->HasNext()) {
+	oid_t cur = vtx->Next();
+	tmp_pr[cur] = 0;
+
+	Objects * neighborObjects = graph->Neighbors(cur, edgeType, Outgoing);
+	ObjectsIterator * neighbor = neighborObjects->Iterator();
+	while(neighbor->HasNext()) {
+	  oid_t neigh = neighbor->Next();
+	  tmp_pr[cur] += (pr[neigh] / ((double) graph->Degree(neigh, edgeType, Outgoing)));
+	}
+	delete neighbor;
+	delete neighborObjects;
+      }
+      delete vtx;
+    }
+
+    {
+      ObjectsIterator * vtx = vtxObjects->Iterator();
+      while(vtx->HasNext()) {
+	oid_t cur = vtx->Next();
+	tmp_pr[cur] = tmp_pr[cur] * dampingfactor + (((double)(1-dampingfactor))/((double)nv));
+      }
+      delete vtx;
+    }
+
+    delta = 0;
+    {
+      ObjectsIterator * vtx = vtxObjects->Iterator();
+      while(vtx->HasNext()) {
+	oid_t cur = vtx->Next();
+	double mydelta = tmp_pr[cur] - pr[cur];
+
+	if(mydelta < 0)
+	  mydelta = -mydelta;
+
+	delta += mydelta;
+	pr[cur] = tmp_pr[cur];
+      }
+      delete vtx;
+    }
+
+    iter--;
+  }
+
+  delete vtxObjects;
+
+  printf("\tDone %lf\n", toc());
+#endif
+
+  V(Reading actions...)
+  tic();
+  
+  fp = fopen(argv[2], "r");
+
+  int64 na;
+  int64 * actions;
+
+  fread(&check, sizeof(uint64), 1, fp);
+
+  if(check != endian_check) {
+    E(Endianness does not agree.  Order swapping not implemented.);
+  }
+
+  fread(&na, sizeof(int64), 1, fp);
+
+  actions = (int64 *)malloc(sizeof(int64) * na*2);
+
+  fread(actions, sizeof(int64), na*2, fp);
+
+  fclose(fp);
+
+  printf("\t%ld actions read\n", na);
+
+  printf("\tDone %lf\n", toc());
+
+  V(Insert / remove...)
+  tic();
+
+  if(na > 100000) {
+    V(Due to object limit lowering insert / delete to 100k);
+    na = 100000;
+  }
+
+  for(uint64 a = 0; a < na; a++) {
+    int64 i = actions[2*a];
+    int64 j = actions[2*a+1];
+
+    /* is insertion? */
+    if(i >= 0) {
+      if(vertices[i] == -1) {
+	vertices[i] = graph->NewNode(vtxType);
+      }
+      if(vertices[j] == -1) {
+	vertices[j] = graph->NewNode(vtxType);
+      }
+      oid_t edge = graph->FindEdge(edgeType, vertices[i], vertices[j]);
+      if(Objects::InvalidOID !=  edge) {
+	graph->GetAttribute(edge, edgeWeightType, *value);
+	value->SetLong(value->GetLong()+1);
+	graph->SetAttribute(edge, edgeWeightType, *value);
+      } else {
+	edge = graph->NewEdge(edgeType, vertices[i], vertices[j]);
+	graph->SetAttribute(edge, edgeWeightType, value->SetLong(1));
+      }
+      edge = graph->FindEdge(edgeType, vertices[j], vertices[i]);
+      if(Objects::InvalidOID !=  edge) {
+	graph->GetAttribute(edge, edgeWeightType, *value);
+	value->SetLong(value->GetLong()+1);
+	graph->SetAttribute(edge, edgeWeightType, *value);
+      } else {
+	edge = graph->NewEdge(edgeType, vertices[j], vertices[i]);
+	graph->SetAttribute(edge, edgeWeightType, value->SetLong(1));
+      }
+    } else {
+      i = ~i;
+      j = ~j;
+      if(vertices[i] != -1 && vertices[j] != -1) {
+	oid_t edge = graph->FindEdge(edgeType, vertices[i], vertices[j]);
+	if(Objects::InvalidOID !=  edge) {
+	  graph->Drop(edge);
+	}
+      }
+    }
+  }
+  printf("\tDone %lf\n", toc());
+  free(actions);
+
+  delete value;
+
 
   delete sess;
   delete db;
