@@ -151,6 +151,8 @@ int main(int argc, char *argv[]) {
       delta += mydelta;
       pr[v] = tmp_pr[v];
     }
+
+    iter--;
   }
 
   printf("\tDone %lf\n", toc());
