@@ -326,5 +326,7 @@ int main(int argc, char *argv[]) {
   V(Closing db...);
   sqlite3_close(db);
   V(Exiting);
+
+  pause();
   return 0;
 }
