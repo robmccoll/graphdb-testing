@@ -10,3 +10,6 @@
 [submodule "lib/arangodb"]
 	path = lib/arangodb
 	url = https://github.com/triAGENS/ArangoDB.git
+[submodule "lib/arangodb-php"]
+	path = lib/arangodb-php
+	url = https://github.com/triAGENS/ArangoDB-PHP.git
