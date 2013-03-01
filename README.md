@@ -30,14 +30,14 @@ edges from being added to the graph which is the version used here.
 | STINGER       | Library    | Implemented  | Implemented  | Implemented  | Implemented  |
 | MySQL         | SQLDB      |              |              |              |              |
 | SQLite        | SQLDB      | Implemented  | Implemented  | Implemented  | Implemented  |
-| Oracle        | SQLDB      |              |              |              |              |
-| SQL Server    | SQLDB      |              |              |              |              |
+| Oracle        | SQLDB      | Not Planned  | Not Planned  | Not Planned  | Not Planned  |
+| SQL Server    | SQLDB      | Not Planned  | Not Planned  | Not Planned  | Not Planned  |
 | Neo4j         | GDB/NoSQL  |              |              |              |              |
 | OrientDB      | GDB/NoSQL  |              |              |              |              |
 | InfoGrid      | GDB        |              |              |              |              |
 | Titan         | GDB        |              |              |              |              |
 | FlockDB       | GDB        |              |              |              |              |
-| ArangoDB      | GDB/KV/DOC |              |              |              |              |
+| ArangoDB      | GDB/KV/DOC | Implemented  | Implemented  | Implemented  |              |
 | InfiniteGraph | GDB        |              |              |              |              |
 | AllegroGraph  | GDB        |              |              |              |              |
 | DEX           | GDB        | Implemented  | Implemented  | Implemented  | Implemented  |

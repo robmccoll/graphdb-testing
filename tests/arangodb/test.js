@@ -59,60 +59,44 @@ function bfs(db, start) {
 
 function page_rank(db, nv) {
 
-  q = db.vertices.all();
-  while(q.hasNext()) {
-    v = q.next();
-    db.vertices.update(v, { "component" : v.name, "distance" : -1, "pr" : 1.0 / nv, "pr_tmp" : 0});
-  }
-
   delta = 1;
   epsilon = 1e-8;
   dampingfactor = 0.85;
   maxiter = 100;
+  iter = maxiter;
   tmp_pr = [];
 
   while(delta > epsilon && iter > 0) {
-    q = db.vertices.all();
-    while(q.hasNext()) {
-      v = q.next();
-      tmp_pr[v.name] = 0;
+    for(i = 1; i <= nv; i++) {
+      q = db.vertices.byExample({name : i});
+      if(q.hasNext()) {
+	v = q.next();
+	tmp_pr[i] = 0;
 
-      eq = db.edges.outEdges(v._id);
-      for(e in eq) {
-	edge = db.vertices.document(eq[e]._to);
-	// TODO YOU ARE HERE
+	eq = db.edges.outEdges(v._id);
+	if(eq) {
+	  for(e in eq) {
+	    edge = db.vertices.document(eq[e]._to);
+	    tmp_pr[v.name] += (edge.pr / (db.edges.outEdges(eq[e]._to).length));
+	  }
+	}
       }
-    }
-
-/*
-    for(; vtxIt != vtxEnd; ++vtxIt++) {
-      tmp_pr[*vtxIt] = 0;
-
-      Graph::out_edge_iterator edgesIt, edgesEnd; 
-
-      tie(edgesIt, edgesEnd) = out_edges(Graph::vertex_descriptor(*vtxIt), g);
-      for(; edgesIt != edgesEnd; ++edgesIt) {
-	tmp_pr[source(*edgesIt,g)] += (((double)pr[target(*edgesIt, g)]) / 
-	  ((double) out_degree(target(*edgesIt, g), g)));
-      }
-    }
-
-    for(uint64_t v = 0; v < nv; v++) {
-      tmp_pr[v] = tmp_pr[v] * dampingfactor + (((double)(1-dampingfactor)) / ((double)nv));
     }
 
     delta = 0;
-    for(uint64_t v = 0; v < nv; v++) {
-      double mydelta = tmp_pr[v] - pr[v];
+    for(i = 1; i <= nv; i++) {
+      q = db.vertices.byExample({name : i});
+      if(q.hasNext()) {
+	v = q.next();
+	tmp_pr[v.name] = tmp_pr[v.name] * dampingfactor + ((1-dampingfactor) / (nv));
 
-      if(mydelta < 0)
-	mydelta = -mydelta;
-
-      delta += mydelta;
-      pr[v] = tmp_pr[v];
+	my_delta = tmp_pr[v.name] - v.pr;
+	delta += ((my_delta > 0) ? my_delta : (-my_delta));
+	db.vertices.update(v, { "pr" : tmp_pr[v.name] });
+      }
     }
-    */
 
+    print("Iteration " + (maxiter - iter) + " delta " + delta);
     iter--;
   }
 }
@@ -136,6 +120,6 @@ print("\tDone " + ((stop - start) / 1000));
 
 print("PageRank...");
 var start = new Date();
-page_rank(db, 1);
+page_rank(db, db.vertices.count());
 var stop = new Date();
 print("\tDone " + ((stop - start) / 1000));
