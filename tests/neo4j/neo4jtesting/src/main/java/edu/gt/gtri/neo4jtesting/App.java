@@ -35,13 +35,15 @@ public class App
     Node [] nodes = null;
 
     System.out.println( "Up and running..." );
-    graphDb = new GraphDatabaseFactory().newEmbeddedDatabase("./neo4jdb.db");
-    registerShutdownHook(graphDb);
 
     if(args.length < 2) {
       System.out.printf("Usage: make ARGS=\"graph.file actions.file\"\n");
       System.exit(-1);
     }
+
+    graphDb = new GraphDatabaseFactory().newEmbeddedDatabase("./neo4jdb.db");
+    registerShutdownHook(graphDb);
+
 
     System.out.printf("Reading graph from disk... %s\n", args[0]);
     try {
@@ -126,7 +128,6 @@ public class App
 	  if(srcIdObj != null && dstIdObj != null) {
 	    int srcId = (Integer)(srcIdObj);
 	    int dstId = (Integer)(dstIdObj);
-	    rel.getStartNode().getProperty("id");
 	    if(componentID[srcId] < componentID[dstId]) {
 	      componentID[srcId] = componentID[dstId];
 	      changed = true;
