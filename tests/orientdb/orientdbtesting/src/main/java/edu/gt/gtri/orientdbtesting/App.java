@@ -131,21 +131,15 @@ public class App
       {
 	startTime = System.nanoTime();
 
-	//HashMap<Long, Boolean> found = new HashMap<Long, Boolean>((int)nv);
-	//HashMap<Long, Integer> distance = new HashMap<Long, Integer>((int)nv);
-	boolean found [] = new boolean[(int)nv];
-	int distance [] = new int[(int)nv];
+	HashMap<Long, Boolean> found = new HashMap<Long, Boolean>((int)nv);
+	HashMap<Long, Integer> distance = new HashMap<Long, Integer>((int)nv);
 	
 	for(long v = 1; v < nv; v++) {
-	  //found.put(v, false);
-	  //distance.put(v, -1);
-	  found[(int)v] = false;
-	  distance[(int)v] = -1;
+	  found.put(v, false);
+	  distance.put(v, -1);
 	}
-	found[0] = true;
-	distance[0] = 0;
-	//found.put((long)0, true);
-	//distance.put((long)0, 0);
+	found.put((long)0, true);
+	distance.put((long)0, 0);
 
 	LinkedList<ODocument> q = new LinkedList<ODocument>();
 	q.add(vertices[0]);
@@ -156,12 +150,9 @@ public class App
 	  for(OIdentifiable edge : graph.getOutEdges(v)) {
 	    ODocument endVertex = graph.getInVertex(edge.getRecord());
 	    long eid = (Long)endVertex.field("id");
-	    //if(!found.get(eid)) {
-	    //  found.put(eid, true);
-	    //  distance.put(eid, (distance.get(vid) + 1));
-	    if(!found[(int)eid]) {
-	      found[(int)eid] = true;
-	      distance[(int)eid] = distance[(int)vid] + 1;
+	    if(!found.get(eid)) {
+	      found.put(eid, true);
+	      distance.put(eid, (distance.get(vid) + 1));
 	      q.offer(endVertex);
 	    }
 	  }
@@ -170,8 +161,7 @@ public class App
 	endTime = System.nanoTime();
 
 	int depth = 0;
-	//for(int d : distance.values()) {
-	for(int d : distance) {
+	for(int d : distance.values()) {
 	  if(d > depth)
 	    depth = d;
 	}
