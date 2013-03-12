@@ -13,3 +13,6 @@
 [submodule "lib/arangodb-php"]
 	path = lib/arangodb-php
 	url = https://github.com/triAGENS/ArangoDB-PHP.git
+[submodule "lib/neo4j"]
+	path = lib/neo4j
+	url = git://github.com/neo4j/neo4j.git

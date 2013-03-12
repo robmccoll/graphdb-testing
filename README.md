@@ -32,7 +32,7 @@ edges from being added to the graph which is the version used here.
 | SQLite        | SQLDB      | Implemented  | Implemented  | Implemented  | Implemented  |
 | Oracle        | SQLDB      | Not Planned  | Not Planned  | Not Planned  | Not Planned  |
 | SQL Server    | SQLDB      | Not Planned  | Not Planned  | Not Planned  | Not Planned  |
-| Neo4j         | GDB/NoSQL  |              |              |              |              |
+| Neo4j         | GDB/NoSQL  | Implemented  | Implemented  | Implemented  | Implemented  |
 | OrientDB      | GDB/NoSQL  |              |              |              |              |
 | InfoGrid      | GDB        |              |              |              |              |
 | Titan         | GDB        |              |              |              |              |
