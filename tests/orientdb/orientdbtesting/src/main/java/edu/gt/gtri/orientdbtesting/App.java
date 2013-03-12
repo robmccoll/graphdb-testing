@@ -169,7 +169,6 @@ public class App
       }
       System.out.println("\tDone... " + (((double)(endTime - startTime))/1e9) + "\n");
 
-  /*
       System.out.println("Page Rank...");
       {
 	double epsilon = 1e-8;
@@ -177,10 +176,10 @@ public class App
 	int maxiter = 100;
 
 	startTime = System.nanoTime();
-	HashMap<Node, Double> pr = new HashMap<Node, Double>((int)nv);
-	HashMap<Node, Double> prTmp = new HashMap<Node, Double>((int)nv);
+	HashMap<Long, Double> pr = new HashMap<Long, Double>((int)nv);
+	HashMap<Long, Double> prTmp = new HashMap<Long, Double>((int)nv);
 
-	for(Node v : GlobalGraphOperations.at(graphDb).getAllNodes()) {
+	for(long v = 0; v < nv; v++) {
 	  pr.put(v, 1.0/((double)nv));
 	}
 
@@ -188,28 +187,30 @@ public class App
 	double delta = 1;
 
 	while(delta > epsilon && iter > 0) {
-	  for(Node v : GlobalGraphOperations.at(graphDb).getAllNodes()) {
+	  for(ODocument v : graph.browseVertices()) {
 	    double myPrTmp = 0;
-	    for(Relationship rel : v.getRelationships()) {
-	      Node endNode = rel.getEndNode();
-	      myPrTmp += pr.get(endNode) / ((double)countDegree(endNode));
+	    for(OIdentifiable edge : graph.getOutEdges(v)) {
+	      ODocument u = graph.getInVertex(edge.getRecord());
+	      myPrTmp += pr.get((Long)u.field("id")) / ((double)(graph.getOutEdges(u).size()));
 	    }
-	    prTmp.put(v, myPrTmp);
+	    prTmp.put((Long)v.field("id"), myPrTmp);
 	  }
 
-	  for(Node v : GlobalGraphOperations.at(graphDb).getAllNodes()) {
-	    prTmp.put(v, prTmp.get(v) * dampingfactor + ((1.0-dampingfactor) / ((double)nv)));
+	  for(ODocument v : graph.browseVertices()) {
+	    long id = (Long)v.field("id");
+	    prTmp.put(id, prTmp.get(id) * dampingfactor + ((1.0-dampingfactor) / ((double)nv)));
 	  }
 
 	  delta = 0;
-	  for(Node v : GlobalGraphOperations.at(graphDb).getAllNodes()) {
-	    double mydelta = prTmp.get(v) - pr.get(v);
+	  for(ODocument v : graph.browseVertices()) {
+	    long id = (Long)v.field("id");
+	    double mydelta = prTmp.get(id) - pr.get(id);
 
 	    if(mydelta < 0)
 	      mydelta = -mydelta;
 
 	    delta += mydelta;
-	    pr.put(v, prTmp.get(v));
+	    pr.put(id, prTmp.get(id));
 	  }
 
 	  //System.out.println("\tIteration " + (maxiter - iter) + " delta " + delta);
@@ -252,65 +253,45 @@ public class App
       {
 	startTime = System.nanoTime();
 
-	Transaction tx = graphDb.beginTx();
-	try {
-	  for(int a = 0; a < na; a++) {
-	    long i = actions[2*a];
-	    long j = actions[2*a+1];
-	    if(i < 0) {
-	      i =	~i;
-	      j =	~j;
-	      for(Relationship rel : nodes[(int)i].getRelationships()) {
-		if(nodes[(int)j] == rel.getEndNode()) {
-		  rel.delete();
-		  break;
-		}
-	      }
-	      for(Relationship rel : nodes[(int)j].getRelationships()) {
-		if(nodes[(int)i] == rel.getEndNode()) {
-		  rel.delete();
-		  break;
-		}
-	      }
-	    } else {
-	      boolean handled = false;
-	      for(Relationship rel : nodes[(int)i].getRelationships()) {
-		if(nodes[(int)j] == rel.getEndNode()) {
-		  rel.setProperty("weight", (Integer)rel.getProperty("weight") + 1);
-		  handled = true;
-		  break;
-		}
-	      }
-	      if(!handled) {
-		Relationship rel = nodes[(int)i].createRelationshipTo(nodes[(int)j], RelTypes.EDGE);
-		rel.setProperty("weight", 1);
-	      }
-	      handled = false;
-	      for(Relationship rel : nodes[(int)j].getRelationships()) {
-		if(nodes[(int)i] == rel.getEndNode()) {
-		  rel.setProperty("weight", (Integer)rel.getProperty("weight") + 1);
-		  handled = true;
-		  break;
-		}
-	      }
-	      if(!handled) {
-		Relationship rel = nodes[(int)j].createRelationshipTo(nodes[(int)i], RelTypes.EDGE);
-		rel.setProperty("weight", 1);
-	      }
+	for(int a = 0; a < na; a++) {
+	  long i = actions[2*a];
+	  long j = actions[2*a+1];
+	  if(i < 0) {
+	    i = ~i;
+	    j = ~j;
+	    for(OIdentifiable edge : graph.getEdgesBetweenVertexes(vertices[(int)i], vertices[(int)j])) {
+	      graph.removeEdge(edge.getRecord());
+	      break;
+	    }
+	    for(OIdentifiable edge : graph.getEdgesBetweenVertexes(vertices[(int)j], vertices[(int)i])) {
+	      graph.removeEdge(edge.getRecord());
+	      break;
+	    }
+	  } else {
+	    boolean handled = false;
+	    for(OIdentifiable edge : graph.getEdgesBetweenVertexes(vertices[(int)i], vertices[(int)j])) {
+	      ODocument edgedoc = edge.getRecord();
+	      edgedoc.field("weight", ((Integer)edgedoc.field("weight")) + 1);
+	      break;
+	    }
+	    if(!handled) {
+	      graph.createEdge(vertices[(int)i], vertices[(int)j]).field("weight", 1);
+	    }
+	    handled = false;
+	    for(OIdentifiable edge : graph.getEdgesBetweenVertexes(vertices[(int)j], vertices[(int)i])) {
+	      ODocument edgedoc = edge.getRecord();
+	      edgedoc.field("weight", ((Integer)edgedoc.field("weight")) + 1);
+	      break;
+	    }
+	    if(!handled) {
+	      graph.createEdge(vertices[(int)j], vertices[(int)i]).field("weight", 1);
 	    }
 	  }
-
-	  tx.success();
-	} catch (Exception e) {
-	  tx.failure();
-	} finally {
-	  tx.finish();
 	}
 
 	endTime = System.nanoTime();
       }
       System.out.println("\tDone... " + (((double)(endTime - startTime))/1e9) + "\n");
-      */
     } finally {
       graph.close();
     }
