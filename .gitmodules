@@ -16,3 +16,6 @@
 [submodule "lib/neo4j"]
 	path = lib/neo4j
 	url = git://github.com/neo4j/neo4j.git
+[submodule "lib/orientdb"]
+	path = lib/orientdb
+	url = https://github.com/nuvolabase/orientdb.git
