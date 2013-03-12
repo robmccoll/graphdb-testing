@@ -33,7 +33,7 @@ edges from being added to the graph which is the version used here.
 | Oracle        | SQLDB      | Not Planned  | Not Planned  | Not Planned  | Not Planned  |
 | SQL Server    | SQLDB      | Not Planned  | Not Planned  | Not Planned  | Not Planned  |
 | Neo4j         | GDB/NoSQL  | Implemented  | Implemented  | Implemented  | Implemented  |
-| OrientDB      | GDB/NoSQL  |              |              |              |              |
+| OrientDB	| GDB/NoSQL  | Implemented  | Implemented  | Implemented  | Implemented  |
 | InfoGrid      | GDB        |              |              |              |              |
 | Titan         | GDB        |              |              |              |              |
 | FlockDB       | GDB        |              |              |              |              |
