@@ -19,3 +19,6 @@
 [submodule "lib/orientdb"]
 	path = lib/orientdb
 	url = https://github.com/nuvolabase/orientdb.git
+[submodule "lib/titan"]
+	path = lib/titan
+	url = https://github.com/thinkaurelius/titan.git
