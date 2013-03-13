@@ -39,7 +39,7 @@ edges from being added to the graph which is the version used here.
 | Neo4j         | GDB/NoSQL  | Implemented  | Implemented  | Implemented  | Implemented  |
 | OrientDB	| GDB/NoSQL  | Implemented  | Implemented  | Implemented  | Implemented  |
 | InfoGrid      | GDB        |              |              |              |              |
-| Titan         | GDB        |              |              |              |              |
+| Titan         | GDB        | Implemented  | Implemented  | Implemented  | Implemented  |
 | FlockDB       | GDB        |              |              |              |              |
 | ArangoDB      | GDB/KV/DOC | Implemented  | Implemented  | Implemented  |              |
 | InfiniteGraph | GDB        |              |              |              |              |
