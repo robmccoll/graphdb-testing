@@ -62,14 +62,15 @@ edges from being added to the graph which is the version used here.
 Graphs will be generated using an implementation of the [R-MAT](http://repository.cmu.edu/compsci/541/)
 synthetic graph generator which is designed to generate graphs that emulate the properties of real
 social networks at a large scale (small-world phenomena, power-law degree distribution, etc).
-Graphs are generated using parameters $P_A$ = 0.55, $P_B$ = 0.1, $P_C$ = 0.1, $P_D$ = 0.25.  The size of the
-graph is determined by SCALE and EDGE FACTOR, where the number of vertices = $2^{SCALE}$ and the number of
+Graphs are generated using parameters A = 0.55, B = 0.1, C = 0.1, D = 0.25.  The size of the
+graph is determined by SCALE and EDGE FACTOR, where the number of vertices = 2^SCALE and the number of
 edges is the number of vertices multiplied by the edge factor.  Inserted, updated, and deleted edges
-are generated following this same procedure with $P_delete = 0.0625$ that instead of generating an 
+are generated following this same procedure with P(delete) = 0.0625 that instead of generating an 
 insertion, a previous inserted edge will be selected for deletion. Graph sizes used for testing
 are listed below:
 
 | Name    | SCALE | EDGE FACTOR | Vertices | Edges |
+|---------|-------|-------------|----------|-------|
 | Tiny    | 10    | 8           | 1K       | 8K    |
 | Small   | 15    | 8           | 32K      | 256K  |
 | Medium  | 20    | 8           | 1M       | 8M    |
