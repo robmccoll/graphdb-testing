@@ -47,7 +47,7 @@ edges from being added to the graph which is the version used here.
 | DEX           | GDB        | Implemented  | Implemented  | Implemented  | Implemented  |
 | GraphBase     | GDB        |              |              |              |              |
 | HyperGraphDB  | HyperGDB   |              |              |              |              |
-| Bagel         | BSP        |              |              |              |              |
+| Bagel         | BSP        | Implemented  | Implemented  | Implemented  | Implemented  |
 | Hama          | BSP        |              |              |              |              |
 | Giraph        | BSP        |              |              |              |              |
 | PEGASUS       | Hadoop     |              |              |              |              |
