@@ -1,0 +1,221 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>edu.gt.gtri.bageltesting</groupId>
+  <artifactId>bageltesting</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  <name>${project.artifactId}</name>
+
+  <properties>
+    <maven.compiler.source>1.6</maven.compiler.source>
+    <maven.compiler.target>1.6</maven.compiler.target>
+    <encoding>UTF-8</encoding>
+    <scala.tools.version>2.10</scala.tools.version>
+    <scala.version>2.10.0</scala.version>
+  </properties>
+  
+  <repositories>
+    <repository>
+      <id>typesafe</id>
+      <name>Typesafe Repository</name>
+      <url>http://repo.typesafe.com/typesafe/releases/</url>
+    </repository>
+  </repositories>
+
+
+  <dependencies>
+    <dependency>
+      <groupId>org.scala-lang</groupId>
+      <artifactId>scala-library</artifactId>
+      <version>${scala.version}</version>
+    </dependency>
+
+    <!-- Test -->
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.11</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.specs2</groupId>
+      <artifactId>specs2_${scala.tools.version}</artifactId>
+      <version>1.13</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.scalatest</groupId>
+      <artifactId>scalatest_${scala.tools.version}</artifactId>
+      <version>2.0.M6-SNAP8</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>spark.bagel</groupId>
+      <artifactId>spark-bagel</artifactId>
+      <version>2.9.2-0.7.1-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+      <groupId>spark.core</groupId>
+      <artifactId>spark-core</artifactId>
+      <version>2.9.2-0.7.1-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.hadoop</groupId>
+      <artifactId>hadoop-core</artifactId>
+      <version>1.1.2</version>
+    </dependency>
+<dependency><artifactId>akka-actor-2.0.3</artifactId><groupId>akka-actor</groupId><version>2.0.3</version></dependency>
+<dependency><artifactId>akka-remote-2.0.3</artifactId><groupId>akka-remote</groupId><version>2.0.3</version></dependency>
+<dependency><artifactId>akka-slf4j-2.0.3</artifactId><groupId>akka-slf4j</groupId><version>2.0.3</version></dependency>
+<dependency><artifactId>akka-zeromq-2.0.3</artifactId><groupId>akka-zeromq</groupId><version>2.0.3</version></dependency>
+<dependency><artifactId>algebird-core-2.9.2-0.1.8</artifactId><groupId>algebird-core</groupId><version>2.9.2-0.1.8</version></dependency>
+<dependency><artifactId>ant-1.6.5</artifactId><groupId>ant</groupId><version>1.6.5</version></dependency>
+<dependency><artifactId>asm-all-3.3.1</artifactId><groupId>asm-all</groupId><version>3.3.1</version></dependency>
+<dependency><artifactId>avro-1.6.3</artifactId><groupId>avro</groupId><version>1.6.3</version></dependency>
+<dependency><artifactId>avro-ipc-1.6.3</artifactId><groupId>avro-ipc</groupId><version>1.6.3</version></dependency>
+<dependency><artifactId>cglib-nodep-2.2.2</artifactId><groupId>cglib-nodep</groupId><version>2.2.2</version></dependency>
+<dependency><artifactId>colt-1.2.0</artifactId><groupId>colt</groupId><version>1.2.0</version></dependency>
+<dependency><artifactId>commons-beanutils-1.7.0</artifactId><groupId>commons-beanutils</groupId><version>1.7.0</version></dependency>
+<dependency><artifactId>commons-beanutils-core-1.8.0</artifactId><groupId>commons-beanutils-core</groupId><version>1.8.0</version></dependency>
+<dependency><artifactId>commons-cli-1.2</artifactId><groupId>commons-cli</groupId><version>1.2</version></dependency>
+<dependency><artifactId>commons-codec-1.4</artifactId><groupId>commons-codec</groupId><version>1.4</version></dependency>
+<dependency><artifactId>commons-collections-3.2.1</artifactId><groupId>commons-collections</groupId><version>3.2.1</version></dependency>
+<dependency><artifactId>commons-configuration-1.6</artifactId><groupId>commons-configuration</groupId><version>1.6</version></dependency>
+<dependency><artifactId>commons-digester-1.8</artifactId><groupId>commons-digester</groupId><version>1.8</version></dependency>
+<dependency><artifactId>commons-el-1.0</artifactId><groupId>commons-el</groupId><version>1.0</version></dependency>
+<dependency><artifactId>commons-httpclient-3.0.1</artifactId><groupId>commons-httpclient</groupId><version>3.0.1</version></dependency>
+<dependency><artifactId>commons-io-1.4</artifactId><groupId>commons-io</groupId><version>1.4</version></dependency>
+<dependency><artifactId>commons-io-2.1</artifactId><groupId>commons-io</groupId><version>2.1</version></dependency>
+<dependency><artifactId>commons-lang-2.6</artifactId><groupId>commons-lang</groupId><version>2.6</version></dependency>
+<dependency><artifactId>commons-logging-1.1.1</artifactId><groupId>commons-logging</groupId><version>1.1.1</version></dependency>
+<dependency><artifactId>commons-math-2.1</artifactId><groupId>commons-math</groupId><version>2.1</version></dependency>
+<dependency><artifactId>commons-net-1.4.1</artifactId><groupId>commons-net</groupId><version>1.4.1</version></dependency>
+<dependency><artifactId>concurrent-1.3.4</artifactId><groupId>concurrent</groupId><version>1.3.4</version></dependency>
+<dependency><artifactId>concurrentlinkedhashmap-lru-1.2</artifactId><groupId>concurrentlinkedhashmap-lru</groupId><version>1.2</version></dependency>
+<dependency><artifactId>core-3.1.1</artifactId><groupId>core</groupId><version>3.1.1</version></dependency>
+<dependency><artifactId>dispatch-json-2.9.1-0.8.5</artifactId><groupId>dispatch-json</groupId><version>2.9.1-0.8.5</version></dependency>
+<dependency><artifactId>easymock-3.1</artifactId><groupId>easymock</groupId><version>3.1</version></dependency>
+<dependency><artifactId>fastutil-6.4.4</artifactId><groupId>fastutil</groupId><version>6.4.4</version></dependency>
+<dependency><artifactId>flume-ng-sdk-1.2.0</artifactId><groupId>flume-ng-sdk</groupId><version>1.2.0</version></dependency>
+<dependency><artifactId>guava-11.0.1</artifactId><groupId>guava</groupId><version>11.0.1</version></dependency>
+<dependency><artifactId>h2-lzf-1.0</artifactId><groupId>h2-lzf</groupId><version>1.0</version></dependency>
+<dependency><artifactId>hadoop-core-1.0.4</artifactId><groupId>hadoop-core</groupId><version>1.0.4</version></dependency>
+<dependency><artifactId>hsqldb-1.8.0.10</artifactId><groupId>hsqldb</groupId><version>1.8.0.10</version></dependency>
+<dependency><artifactId>httpclient-4.1</artifactId><groupId>httpclient</groupId><version>4.1</version></dependency>
+<dependency><artifactId>httpcore-4.1</artifactId><groupId>httpcore</groupId><version>4.1</version></dependency>
+<dependency><artifactId>jackson-core-asl-1.0.1</artifactId><groupId>jackson-core-asl</groupId><version>1.0.1</version></dependency>
+<dependency><artifactId>jackson-core-asl-1.9.3</artifactId><groupId>jackson-core-asl</groupId><version>1.9.3</version></dependency>
+<dependency><artifactId>jackson-mapper-asl-1.0.1</artifactId><groupId>jackson-mapper-asl</groupId><version>1.0.1</version></dependency>
+<dependency><artifactId>jackson-mapper-asl-1.9.3</artifactId><groupId>jackson-mapper-asl</groupId><version>1.9.3</version></dependency>
+<dependency><artifactId>jasper-compiler-5.5.12</artifactId><groupId>jasper-compiler</groupId><version>5.5.12</version></dependency>
+<dependency><artifactId>jasper-runtime-5.5.12</artifactId><groupId>jasper-runtime</groupId><version>5.5.12</version></dependency>
+<dependency><artifactId>JavaEWAH-0.6.6</artifactId><groupId>JavaEWAH</groupId><version>0.6.6</version></dependency>
+<dependency><artifactId>jets3t-0.7.1</artifactId><groupId>jets3t</groupId><version>0.7.1</version></dependency>
+<dependency><artifactId>jetty-6.1.26</artifactId><groupId>jetty</groupId><version>6.1.26</version></dependency>
+<dependency><artifactId>jetty-continuation-7.5.3.v20111011</artifactId><groupId>jetty-continuation</groupId><version>7.5.3.v20111011</version></dependency>
+<dependency><artifactId>jetty-http-7.5.3.v20111011</artifactId><groupId>jetty-http</groupId><version>7.5.3.v20111011</version></dependency>
+<dependency><artifactId>jetty-io-7.5.3.v20111011</artifactId><groupId>jetty-io</groupId><version>7.5.3.v20111011</version></dependency>
+<dependency><artifactId>jetty-server-7.5.3.v20111011</artifactId><groupId>jetty-server</groupId><version>7.5.3.v20111011</version></dependency>
+<dependency><artifactId>jetty-util-6.1.26</artifactId><groupId>jetty-util</groupId><version>6.1.26</version></dependency>
+<dependency><artifactId>jetty-util-7.5.3.v20111011</artifactId><groupId>jetty-util</groupId><version>7.5.3.v20111011</version></dependency>
+<dependency><artifactId>jline-0.9.94</artifactId><groupId>jline</groupId><version>0.9.94</version></dependency>
+<dependency><artifactId>jna-3.0.9</artifactId><groupId>jna</groupId><version>3.0.9</version></dependency>
+<dependency><artifactId>jnr-constants-0.8.2</artifactId><groupId>jnr-constants</groupId><version>0.8.2</version></dependency>
+<dependency><artifactId>jsp-2.1-6.1.14</artifactId><groupId>jsp</groupId><version>2.1-6.1.14</version></dependency>
+<dependency><artifactId>jsp-api-2.1-6.1.14</artifactId><groupId>jsp-api</groupId><version>2.1-6.1.14</version></dependency>
+<dependency><artifactId>jsr305-1.3.9</artifactId><groupId>jsr305</groupId><version>1.3.9</version></dependency>
+<dependency><artifactId>junit-3.8.1</artifactId><groupId>junit</groupId><version>3.8.1</version></dependency>
+<dependency><artifactId>junit-4.8.2</artifactId><groupId>junit</groupId><version>4.8.2</version></dependency>
+<dependency><artifactId>junit-interface-0.8</artifactId><groupId>junit-interface</groupId><version>0.8</version></dependency>
+<dependency><artifactId>kfs-0.3</artifactId><groupId>kfs</groupId><version>0.3</version></dependency>
+<dependency><artifactId>kryo-2.20-shaded</artifactId><groupId>kryo</groupId><version>2.20-shaded</version></dependency>
+<dependency><artifactId>mesos-0.9.0-incubating</artifactId><groupId>mesos</groupId><version>0.9.0-incubating</version></dependency>
+<dependency><artifactId>mimepull-1.6</artifactId><groupId>mimepull</groupId><version>1.6</version></dependency>
+<dependency><artifactId>objenesis-1.2</artifactId><groupId>objenesis</groupId><version>1.2</version></dependency>
+<dependency><artifactId>oro-2.0.8</artifactId><groupId>oro</groupId><version>2.0.8</version></dependency>
+<dependency><artifactId>paranamer-2.3</artifactId><groupId>paranamer</groupId><version>2.3</version></dependency>
+<dependency><artifactId>parboiled-core-1.0.2</artifactId><groupId>parboiled-core</groupId><version>1.0.2</version></dependency>
+<dependency><artifactId>parboiled-scala-1.0.2</artifactId><groupId>parboiled-scala</groupId><version>1.0.2</version></dependency>
+<dependency><artifactId>protobuf-java-2.4.1</artifactId><groupId>protobuf-java</groupId><version>2.4.1</version></dependency>
+<dependency><artifactId>scalacheck-2.9.2-1.9</artifactId><groupId>scalacheck</groupId><version>2.9.2-1.9</version></dependency>
+<dependency><artifactId>scalatest-2.9.2-1.8</artifactId><groupId>scalatest</groupId><version>2.9.2-1.8</version></dependency>
+<dependency><artifactId>servlet-api-2.5-20081211</artifactId><groupId>servlet-api</groupId><version>2.5-20081211</version></dependency>
+<dependency><artifactId>servlet-api-2.5-20110124</artifactId><groupId>servlet-api</groupId><version>2.5-20110124</version></dependency>
+<dependency><artifactId>servlet-api-2.5-6.1.14</artifactId><groupId>servlet-api</groupId><version>2.5-6.1.14</version></dependency>
+<dependency><artifactId>servlet-api-2.5</artifactId><groupId>servlet-api</groupId><version>2.5</version></dependency>
+<dependency><artifactId>sjson-2.9.1-0.15</artifactId><groupId>sjson</groupId><version>2.9.1-0.15</version></dependency>
+<dependency><artifactId>slf4j-api-1.6.4</artifactId><groupId>slf4j-api</groupId><version>1.6.4</version></dependency>
+<dependency><artifactId>slf4j-log4j12-1.6.1</artifactId><groupId>slf4j-log4j12</groupId><version>1.6.1</version></dependency>
+<dependency><artifactId>spray-base-1.0-M2.1</artifactId><groupId>spray-base</groupId><version>1.0-M2.1</version></dependency>
+<dependency><artifactId>spray-can-1.0-M2.1</artifactId><groupId>spray-can</groupId><version>1.0-M2.1</version></dependency>
+<dependency><artifactId>spray-io-1.0-M2.1</artifactId><groupId>spray-io</groupId><version>1.0-M2.1</version></dependency>
+<dependency><artifactId>spray-json-2.9.2-1.1.1</artifactId><groupId>spray-json</groupId><version>2.9.2-1.1.1</version></dependency>
+<dependency><artifactId>spray-server-1.0-M2.1</artifactId><groupId>spray-server</groupId><version>1.0-M2.1</version></dependency>
+<dependency><artifactId>spray-util-1.0-M2.1</artifactId><groupId>spray-util</groupId><version>1.0-M2.1</version></dependency>
+<dependency><artifactId>test-interface-0.5</artifactId><groupId>test-interface</groupId><version>0.5</version></dependency>
+<dependency><artifactId>twirl-api-2.9.2-0.5.2</artifactId><groupId>twirl-api</groupId><version>2.9.2-0.5.2</version></dependency>
+<dependency><artifactId>twitter4j-core-3.0.3</artifactId><groupId>twitter4j-core</groupId><version>3.0.3</version></dependency>
+<dependency><artifactId>twitter4j-stream-3.0.3</artifactId><groupId>twitter4j-stream</groupId><version>3.0.3</version></dependency>
+<dependency><artifactId>velocity-1.7</artifactId><groupId>velocity</groupId><version>1.7</version></dependency>
+<dependency><artifactId>xmlenc-0.52</artifactId><groupId>xmlenc</groupId><version>0.52</version></dependency>
+<dependency><artifactId>zeromq-scala-binding-2.9.1-0.0.6</artifactId><groupId>zeromq-scala-binding</groupId><version>2.9.1-0.0.6</version></dependency>
+<dependency><artifactId>zkclient-0.1</artifactId><groupId>zkclient</groupId><version>0.1</version></dependency>
+<dependency><artifactId>zookeeper-3.3.3</artifactId><groupId>zookeeper</groupId><version>3.3.3</version></dependency>
+  </dependencies>
+
+  <build>
+    <sourceDirectory>src/main/scala</sourceDirectory>
+    <testSourceDirectory>src/test/scala</testSourceDirectory>
+    <plugins>
+      <plugin>
+        <!-- see http://davidb.github.com/scala-maven-plugin -->
+        <groupId>net.alchim31.maven</groupId>
+        <artifactId>scala-maven-plugin</artifactId>
+        <version>3.1.3</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>compile</goal>
+              <goal>testCompile</goal>
+            </goals>
+            <configuration>
+              <args>
+                <arg>-make:transitive</arg>
+                <arg>-dependencyfile</arg>
+                <arg>${project.build.directory}/.scala_dependencies</arg>
+              </args>
+            </configuration>
+          </execution>
+        </executions>
+	<configuration>
+	  <launchers>
+	    <launcher>
+	      <id>main</id>
+	      <mainClass>edu.gt.gtri.bageltesting.App</mainClass>
+	      <!-- jvmArgs are optional -->
+	      <jvmArgs>
+		<jvmArg>-Dmaven.scala.displayCmd=true</jvmArg>
+		<jvmArg>-Dclasspath=../../../lib/spark/lib_managed/jars/</jvmArg>
+	      </jvmArgs>
+	    </launcher>
+	    <!-- you could define other launcher -->
+	  </launchers>
+	</configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>2.13</version>
+        <configuration>
+          <useFile>false</useFile>
+          <disableXmlReport>true</disableXmlReport>
+          <!-- If you have classpath issue like NoDefClassError,... -->
+          <!-- useManifestOnlyJar>false</useManifestOnlyJar -->
+          <includes>
+            <include>**/*Test.*</include> 
+            <include>**/*Suite.*</include>
+          </includes>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>

@@ -22,3 +22,9 @@
 [submodule "lib/titan"]
 	path = lib/titan
 	url = https://github.com/thinkaurelius/titan.git
+[submodule "lib/spark"]
+	path = lib/spark
+	url = https://github.com/mesos/spark.git
+[submodule "lib/giraph"]
+	path = lib/giraph
+	url = git://git.apache.org/giraph.git
