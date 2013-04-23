@@ -76,7 +76,7 @@ int main(int argc, char *argv[]) {
 
   double build_time = toc();
   R("\"build\": {\n")
-  R("\"name\":\"sqlite-std\",\n")
+  R("\"name\":\"boost-std\",\n")
   R_A("\"time\":%le\n", build_time)
   R("},\n")
 
@@ -115,7 +115,7 @@ int main(int argc, char *argv[]) {
   double sv_time = toc();
 
   R("\"sv\": {\n")
-  R("\"name\":\"sqlite-std\",\n")
+  R("\"name\":\"boost-std\",\n")
   R_A("\"time\":%le\n", sv_time)
   R("},\n")
 
@@ -133,7 +133,7 @@ int main(int argc, char *argv[]) {
   double sssv_time = toc();
 
   R("\"sssp\": {\n")
-  R("\"name\":\"sqlite-std\",\n")
+  R("\"name\":\"boost-std\",\n")
   R_A("\"time\":%le\n", sssv_time)
   R("},\n")
 
@@ -190,7 +190,7 @@ int main(int argc, char *argv[]) {
   double pr_time = toc();
 
   R("\"pr\": {\n")
-  R("\"name\":\"sqlite-std\",\n")
+  R("\"name\":\"boost-std\",\n")
   R_A("\"time\":%le\n", pr_time)
   R("},\n")
 
@@ -244,7 +244,7 @@ int main(int argc, char *argv[]) {
   double eps = na / toc();
 
   R("\"update\": {\n")
-  R("\"name\":\"sqlite-std\",\n")
+  R("\"name\":\"boost-std\",\n")
   R_A("\"time\":%le\n", eps)
   R("}\n")
   R("},\n")
