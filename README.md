@@ -75,3 +75,6 @@ are listed below:
 | Small   | 15    | 8           | 32K      | 256K  |
 | Medium  | 20    | 8           | 1M       | 8M    |
 | Large   | 24    | 8           | 16M      | 128M  |
+
+For the tiny and small graphs, 100,000 edge updates will be used.  For the medium and large graphs, 
+1,000,000 edge updates will be used. Results will be normalized to edges per second.
