@@ -4,11 +4,15 @@
 #include  <stdio.h>
 #include  <stdlib.h>
 #include  <stdint.h>
+#include <sys/time.h>
+#include <sys/resource.h>
 
 #define E_A(X,...) fprintf(stderr, "%s %s %d:\n\t" #X "\n", __FILE__, __func__, __LINE__, __VA_ARGS__); exit(-1);
 #define E(X) E_A(X,NULL)
 #define V_A(X,...) fprintf(stdout, "%s %s %d:\n\t" #X "\n", __FILE__, __func__, __LINE__, __VA_ARGS__);
 #define V(X) V_A(X,NULL)
+#define R_A(X,...) fprintf(stdout, "RSLT: " X, __VA_ARGS__);
+#define R(X) R_A(X,NULL)
 
 #define DB_OR_DIE(X) \
   if(SQLITE_OK != sqlite3_exec(db, \
@@ -38,6 +42,8 @@ get_double(void * rtn, int argc, char ** argv, char **azColName) {
 }
 
 int main(int argc, char *argv[]) {
+  R("{\n")
+  R("\"type\":\"mysql\",\n")
   if(argc < 3) {
     E_A(Not enough arguments. Usage %s graphfile actionsfile, argv[0]);
   }
@@ -74,6 +80,10 @@ int main(int argc, char *argv[]) {
 
   fclose(fp);
 
+  R_A("\"nv\":%ld,\n", nv)
+  R_A("\"ne\":%ld,\n", ne)
+  R("\"results\": {\n")
+
   V(Creating db and edges table...);
 
   sqlite3 *db;
@@ -108,12 +118,18 @@ int main(int argc, char *argv[]) {
   V(Loading data into edges table...);
   char sqlcmd[1024];
 
+  tic();
   for(uint64_t v = 0; v < nv; v++) {
     for(uint64_t i = off[v]; i < off[v+1]; i++) {
       sprintf(sqlcmd, "INSERT OR IGNORE INTO edges (src, dst, wgt) VALUES (%ld, %ld, %ld)", v, ind[i], wgt[i]);
       DB_OR_DIE(sqlcmd);
     }
   }
+  double build_time = toc();
+  R("\"build\": {\n")
+  R("\"name\":\"sqlite-std\",\n")
+  R_A("\"time\":%le\n", build_time)
+  R("},\n")
 
   free(off); free(ind); free(wgt);
 
@@ -169,7 +185,14 @@ int main(int argc, char *argv[]) {
       old_count = new_count;
   }
 
-  printf("\tDone %lf\n", toc());
+  double sv_time = toc();
+
+  R("\"sv\": {\n")
+  R("\"name\":\"sqlite-std\",\n")
+  R_A("\"time\":%le\n", sv_time)
+  R("},\n")
+
+  printf("\tDone %lf\n", sv_time);
 
   V(Setting up BFS...);
   tic();
@@ -208,7 +231,14 @@ int main(int argc, char *argv[]) {
     dist++;
   }
 
-  printf("\tDone %lf\n", toc());
+  double sssv_time = toc();
+
+  R("\"sssp\": {\n")
+  R("\"name\":\"sqlite-std\",\n")
+  R_A("\"time\":%le\n", sssv_time)
+  R("},\n")
+
+  printf("\tDone %lf\n", sssv_time);
 
   V(Setting up PageRank...);
   tic();
@@ -269,7 +299,14 @@ int main(int argc, char *argv[]) {
     iter--;
   }
 
-  printf("\tDone %lf\n", toc());
+  double pr_time = toc();
+
+  R("\"pr\": {\n")
+  R("\"name\":\"sqlite-std\",\n")
+  R_A("\"time\":%le\n", pr_time)
+  R("},\n")
+
+  printf("\tDone %lf\n", pr_time);
 
   V(Reading actions...)
   tic();
@@ -321,12 +358,26 @@ int main(int argc, char *argv[]) {
     }
   }
 
-  printf("\tDone %lf\n", toc());
+  double eps = na / toc();
+
+  R("\"update\": {\n")
+  R("\"name\":\"sqlite-std\",\n")
+  R_A("\"time\":%le\n", eps)
+  R("}\n")
+  R("},\n")
+
+  struct rusage usage;
+  getrusage(RUSAGE_SELF, &usage);
+
+  R_A("\"na\":%ld,\n", na)
+  R_A("\"mem\":%ld\n", usage.ru_maxrss)
+  R("}\n")
+
+  printf("\tDone %lf\n", eps);
 
   V(Closing db...);
   sqlite3_close(db);
   V(Exiting);
 
-  pause();
   return 0;
 }
