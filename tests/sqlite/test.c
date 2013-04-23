@@ -42,11 +42,12 @@ get_double(void * rtn, int argc, char ** argv, char **azColName) {
 }
 
 int main(int argc, char *argv[]) {
-  R("{\n")
-  R("\"type\":\"mysql\",\n")
   if(argc < 3) {
     E_A(Not enough arguments. Usage %s graphfile actionsfile, argv[0]);
   }
+
+  R("{\n")
+  R("\"type\":\"sqlite\",\n")
 
   int64_t iter = 0;
 
