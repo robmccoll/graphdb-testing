@@ -1,4 +1,6 @@
 #include  <cstdio>
+#include <sys/time.h>
+#include <sys/resource.h>
 
 #include  "boost/graph/graph_traits.hpp"
 #include  "boost/graph/adjacency_list.hpp"
@@ -13,6 +15,8 @@ extern "C" {
 #define E(X) E_A(X,NULL)
 #define V_A(X,...) fprintf(stdout, "%s %s %d:\n\t" #X "\n", __FILE__, __func__, __LINE__, __VA_ARGS__);
 #define V(X) V_A(X,NULL)
+#define R_A(X,...) fprintf(stdout, "RSLT: " X, __VA_ARGS__);
+#define R(X) R_A(X,NULL)
 
 using namespace boost;
 
@@ -20,6 +24,9 @@ int main(int argc, char *argv[]) {
   if(argc < 3) {
     E_A(Not enough arguments. Usage %s graphfile actionsfile, argv[0]);
   }
+
+  R("{\n")
+  R("\"type\":\"boost\",\n")
 
   FILE * fp = fopen(argv[1], "r");
 
@@ -49,18 +56,29 @@ int main(int argc, char *argv[]) {
 
   fclose(fp);
 
+  R_A("\"nv\":%ld,\n", nv)
+  R_A("\"ne\":%ld,\n", ne)
+  R("\"results\": {\n")
+
   V(Creating graph...);
 
   typedef adjacency_list<vecS, vecS, undirectedS> Graph;
 
   Graph g(nv);
 
+  tic();
   V(Loading data into graph...);
   for(uint64_t v = 0; v < nv; v++) {
     for(uint64_t i = off[v]; i < off[v+1]; i++) {
       add_edge(v, ind[i], g);
     }
   }
+
+  double build_time = toc();
+  R("\"build\": {\n")
+  R("\"name\":\"sqlite-std\",\n")
+  R_A("\"time\":%le\n", build_time)
+  R("},\n")
 
   free(off); free(ind); free(wgt);
 
@@ -94,7 +112,14 @@ int main(int argc, char *argv[]) {
     }
   }
 
-  printf("\tDone %lf\n", toc());
+  double sv_time = toc();
+
+  R("\"sv\": {\n")
+  R("\"name\":\"sqlite-std\",\n")
+  R_A("\"time\":%le\n", sv_time)
+  R("},\n")
+
+  printf("\tDone %lf\n", sv_time);
   free(components);
 
   V(BFS...);
@@ -105,18 +130,25 @@ int main(int argc, char *argv[]) {
 
   breadth_first_search(g, 0, visitor(make_bfs_visitor(record_distances(d, on_tree_edge()))));
 
-  printf("\tDone %lf\n", toc());
+  double sssv_time = toc();
+
+  R("\"sssp\": {\n")
+  R("\"name\":\"sqlite-std\",\n")
+  R_A("\"time\":%le\n", sssv_time)
+  R("},\n")
+
+  printf("\tDone %lf\n", sssv_time);
 
   delete[] d;
 
   V(PageRank...);
+  tic();
 
   std::vector<double> tmp_pr(nv);
   std::vector<double> pr(nv);
   double epsilon = 1e-8;
   double dampingfactor = 0.85;
   int64_t maxiter = 100;
-  tic();
 
   std::fill_n(pr.begin(), nv, 1/((double)nv));
 
@@ -155,7 +187,14 @@ int main(int argc, char *argv[]) {
     iter--;
   }
 
-  printf("\tDone %lf\n", toc());
+  double pr_time = toc();
+
+  R("\"pr\": {\n")
+  R("\"name\":\"sqlite-std\",\n")
+  R_A("\"time\":%le\n", pr_time)
+  R("},\n")
+
+  printf("\tDone %lf\n", pr_time);
 
   V(Reading actions...)
   tic();
@@ -201,6 +240,22 @@ int main(int argc, char *argv[]) {
       remove_edge(j, i, g);
     }
   }
-  printf("\tDone %lf\n", toc());
+
+  double eps = na / toc();
+
+  R("\"update\": {\n")
+  R("\"name\":\"sqlite-std\",\n")
+  R_A("\"time\":%le\n", eps)
+  R("}\n")
+  R("},\n")
+
+  struct rusage usage;
+  getrusage(RUSAGE_SELF, &usage);
+
+  R_A("\"na\":%ld,\n", na)
+  R_A("\"mem\":%ld\n", usage.ru_maxrss)
+  R("}\n")
+
+  printf("\tDone %lf\n", eps);
   free(actions);
 }
