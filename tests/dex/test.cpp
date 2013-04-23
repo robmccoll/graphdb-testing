@@ -8,6 +8,8 @@
 
 #include  <stdio.h>
 #include  <algorithm>
+#include <sys/time.h>
+#include <sys/resource.h>
 #include  <map>
 
 extern "C" {
@@ -18,6 +20,8 @@ extern "C" {
 #define E(X) E_A(X,NULL)
 #define V_A(X,...) fprintf(stdout, "%s %s %d:\n\t" #X "\n", __FILE__, __func__, __LINE__, __VA_ARGS__);
 #define V(X) V_A(X,NULL)
+#define R_A(X,...) fprintf(stdout, "RSLT: " X, __VA_ARGS__);
+#define R(X) R_A(X,NULL)
 
 using namespace dex::gdb;
 using namespace dex::algorithms;
@@ -32,6 +36,9 @@ int main(int argc, char *argv[])
   if(argc < 3) {
     E_A(Not enough arguments. Usage %s graphfile actionsfile, argv[0]);
   }
+
+  R("{\n")
+  R("\"type\":\"dex\",\n")
 
   FILE * fp = fopen(argv[1], "r");
 
@@ -61,11 +68,16 @@ int main(int argc, char *argv[])
 
   fclose(fp);
 
+  R_A("\"nv\":%ld,\n", nv)
+  R_A("\"ne\":%ld,\n", ne)
+  R("\"results\": {\n")
+
   V(Creating graph...);
 
   oid_t * vertices = new oid_t[nv];
   std::fill_n(vertices, nv, -1);
 
+  tic();
   DexConfig cfg;
   Dex * dex = new Dex(cfg);
   Database * db = dex->Create(L"./graphdb.dex", L"GraphDB");
@@ -93,7 +105,13 @@ int main(int argc, char *argv[])
     }
   }
 
-#if 0
+  double build_time = toc();
+  R("\"build\": {\n")
+  R("\"name\":\"dex-std\",\n")
+  R_A("\"time\":%le\n", build_time)
+  R("},\n")
+
+#if 1
   V(Shiloach-Vishkin  Connected components...)
   std::map<oid_t, int64> components;
 
@@ -138,7 +156,14 @@ int main(int argc, char *argv[])
   }
   delete edgeObjects;
 
-  printf("\tDone %lf\n", toc());
+  double sv_time = toc();
+
+  R("\"sv\": {\n")
+  R("\"name\":\"dex-std\",\n")
+  R_A("\"time\":%le\n", sv_time)
+  R("},\n")
+
+  printf("\tDone %lf\n", sv_time);
 
   V(BFS...);
   tic();
@@ -155,7 +180,15 @@ int main(int argc, char *argv[])
     }
   }
 
-  printf("\tDone %lf\n", toc());
+
+  double sssv_time = toc();
+
+  R("\"sssp\": {\n")
+  R("\"name\":\"dex-std\",\n")
+  R_A("\"time\":%le\n", sssv_time)
+  R("},\n")
+
+  printf("\tDone %lf\n", sssv_time);
 
   V(PageRank...);
 
@@ -228,7 +261,14 @@ int main(int argc, char *argv[])
 
   delete vtxObjects;
 
-  printf("\tDone %lf\n", toc());
+  double pr_time = toc();
+
+  R("\"pr\": {\n")
+  R("\"name\":\"dex-std\",\n")
+  R_A("\"time\":%le\n", pr_time)
+  R("},\n")
+
+  printf("\tDone %lf\n", pr_time);
 #endif
 
   V(Reading actions...)
@@ -306,7 +346,22 @@ int main(int argc, char *argv[])
       }
     }
   }
-  printf("\tDone %lf\n", toc());
+
+  double eps = na / toc();
+
+  R("\"update\": {\n")
+  R("\"name\":\"dex-std\",\n")
+  R_A("\"time\":%le\n", eps)
+  R("}\n")
+  R("},\n")
+
+  struct rusage usage;
+  getrusage(RUSAGE_SELF, &usage);
+
+  R_A("\"na\":%ld,\n", na)
+  R_A("\"mem\":%ld\n", usage.ru_maxrss)
+  R("}\n")
+  printf("\tDone %lf\n", eps);
   free(actions);
 
   delete value;
