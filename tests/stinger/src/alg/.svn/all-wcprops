@@ -1,0 +1,59 @@
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/graphs/!svn/ver/587/stinger/branches/rad/src/alg
+END
+static_betweenness_centrality.c
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/graphs/!svn/ver/570/stinger/branches/rad/src/alg/static_betweenness_centrality.c
+END
+streaming_clustering_coefficients.c
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/graphs/!svn/ver/572/stinger/branches/rad/src/alg/streaming_clustering_coefficients.c
+END
+result_writer.c
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/graphs/!svn/ver/564/stinger/branches/rad/src/alg/result_writer.c
+END
+static_kcore.c
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/graphs/!svn/ver/552/stinger/branches/rad/src/alg/static_kcore.c
+END
+static_components.c
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/graphs/!svn/ver/561/stinger/branches/rad/src/alg/static_components.c
+END
+static_multicontract_clustering.c
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/graphs/!svn/ver/557/stinger/branches/rad/src/alg/static_multicontract_clustering.c
+END
+streaming_components.c
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/graphs/!svn/ver/552/stinger/branches/rad/src/alg/streaming_components.c
+END
+static_pagerank.c
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/graphs/!svn/ver/571/stinger/branches/rad/src/alg/static_pagerank.c
+END
+empty_alg.c
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/graphs/!svn/ver/587/stinger/branches/rad/src/alg/empty_alg.c
+END

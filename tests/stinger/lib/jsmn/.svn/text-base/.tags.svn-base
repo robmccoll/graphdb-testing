@@ -1,0 +1,123 @@
+		.session.vim	/^inoremap <buffer> 	 =CodeComplete()$/;"	m
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+0	.session.vim	/^normal! 0$/;"	m
+010l	.session.vim	/^normal! 010l$/;"	m
+013l	.session.vim	/^normal! 013l$/;"	m
+019l	.session.vim	/^normal! 019l$/;"	m
+025l	.session.vim	/^normal! 025l$/;"	m
+033l	.session.vim	/^normal! 033l$/;"	m
+<F2>	.session.vim	/^map <F2> :Sq$/;"	m
+<F3>	.session.vim	/^map <F3> :!rm .tags;ctags -R --c-kinds=+p --fields=+S -o .tags .$/;"	m
+<F4>	.session.vim	/^map <F4> :S$/;"	m
+<F5>	.session.vim	/^map <F5> \/^[a-z]$/;"	m
+<F6>	.session.vim	/^map <F6> za$/;"	m
+<Home>	.session.vim	/^imap <Home> :SmartHomeKey$/;"	m
+<Home>	.session.vim	/^map <Home> :SmartHomeKey$/;"	m
+<Plug>NetrwBrowseX	.session.vim	/^nnoremap <silent> <Plug>NetrwBrowseX :call netrw#NetrwBrowseX(expand("<cWORD>"),0)$/;"	m
+ETYPE_AUTHOR	tmp.c	/^  ETYPE_AUTHOR,$/;"	e	enum:edge_type	file:
+ETYPE_LOCATION	tmp.c	/^  ETYPE_LOCATION,$/;"	e	enum:edge_type	file:
+ETYPE_MAX	tmp.c	/^ETYPE_MAX,$/;"	e	enum:edge_type	file:
+ETYPE_RETWEETED	tmp.c	/^  ETYPE_RETWEETED,$/;"	e	enum:edge_type	file:
+JSMN_ARRAY	jsmn.h	/^	JSMN_ARRAY = 2,$/;"	e	enum:__anon1
+JSMN_ERROR_INVAL	jsmn.h	/^	JSMN_ERROR_INVAL = -2,$/;"	e	enum:__anon2
+JSMN_ERROR_NOMEM	jsmn.h	/^	JSMN_ERROR_NOMEM = -1,$/;"	e	enum:__anon2
+JSMN_ERROR_PART	jsmn.h	/^	JSMN_ERROR_PART = -3,$/;"	e	enum:__anon2
+JSMN_OBJECT	jsmn.h	/^	JSMN_OBJECT = 1,$/;"	e	enum:__anon1
+JSMN_PRIMITIVE	jsmn.h	/^	JSMN_PRIMITIVE = 0,$/;"	e	enum:__anon1
+JSMN_STRING	jsmn.h	/^	JSMN_STRING = 3$/;"	e	enum:__anon1
+JSMN_SUCCESS	jsmn.h	/^	JSMN_SUCCESS = 0$/;"	e	enum:__anon2
+S	tmp.c	/^  stinger_t * S;$/;"	m	struct:workspace	file:
+STRINGLIB	Makefile	/^STRINGLIB=..\/string\/$/;"	m
+SessionLoad	.session.vim	/^let SessionLoad = 1$/;"	v
+TOKEN_EQ	jsmn_test.c	30;"	d	file:
+TOKEN_PRINT	jsmn_test.c	39;"	d	file:
+TOKEN_STRING	jsmn_test.c	35;"	d	file:
+VTYPE_MAX	tmp.c	/^VTYPE_MAX,$/;"	e	enum:vertex_type	file:
+VTYPE_NONE	tmp.c	/^  VTYPE_NONE,$/;"	e	enum:vertex_type	file:
+VTYPE_PLACE	tmp.c	/^  VTYPE_PLACE,$/;"	e	enum:vertex_type	file:
+VTYPE_TWEET	tmp.c	/^  VTYPE_TWEET,$/;"	e	enum:vertex_type	file:
+VTYPE_USER	tmp.c	/^  VTYPE_USER,$/;"	e	enum:vertex_type	file:
+__JSMN_H_	jsmn.h	2;"	d
+basictime	tmp.c	/^  int64vector_t * basictime;$/;"	m	struct:workspace	file:
+big_deal	test.c	/^big_deal(int weee) {$/;"	f	signature:(int weee)
+check	jsmn_test.c	17;"	d	file:
+country	tmp.c	/^  int64vector_t * country;$/;"	m	struct:workspace	file:
+done	jsmn_test.c	14;"	d	file:
+edge_type	tmp.c	/^typedef enum edge_type {$/;"	g	file:
+edge_type_strings	tmp.c	/^const char * const edge_type_strings [] = {$/;"	v
+edge_type_t	tmp.c	/^} edge_type_t;$/;"	t	typeref:enum:edge_type	file:
+end	jsmn.h	/^	int end;$/;"	m	struct:__anon3
+fail	jsmn_test.c	11;"	d	file:
+gx	.session.vim	/^nmap gx <Plug>NetrwBrowseX$/;"	m
+jsmn_alloc_token	jsmn.c	/^static jsmntok_t *jsmn_alloc_token(jsmn_parser *parser, $/;"	f	file:	signature:(jsmn_parser *parser, jsmntok_t *tokens, size_t num_tokens)
+jsmn_fill_token	jsmn.c	/^static void jsmn_fill_token(jsmntok_t *token, jsmntype_t type, $/;"	f	file:	signature:(jsmntok_t *token, jsmntype_t type, int start, int end)
+jsmn_init	jsmn.c	/^void jsmn_init(jsmn_parser *parser) {$/;"	f	signature:(jsmn_parser *parser)
+jsmn_init	jsmn.h	/^void jsmn_init(jsmn_parser *parser);$/;"	p	signature:(jsmn_parser *parser)
+jsmn_parse	jsmn.c	/^jsmnerr_t jsmn_parse(jsmn_parser *parser, const char *js, jsmntok_t *tokens, $/;"	f	signature:(jsmn_parser *parser, const char *js, jsmntok_t *tokens, unsigned int num_tokens)
+jsmn_parse	jsmn.h	/^jsmnerr_t jsmn_parse(jsmn_parser *parser, const char *js, $/;"	p	signature:(jsmn_parser *parser, const char *js, jsmntok_t *tokens, unsigned int num_tokens)
+jsmn_parse_primitive	jsmn.c	/^static jsmnerr_t jsmn_parse_primitive(jsmn_parser *parser, const char *js,$/;"	f	file:	signature:(jsmn_parser *parser, const char *js, jsmntok_t *tokens, size_t num_tokens)
+jsmn_parse_string	jsmn.c	/^static jsmnerr_t jsmn_parse_string(jsmn_parser *parser, const char *js,$/;"	f	file:	signature:(jsmn_parser *parser, const char *js, jsmntok_t *tokens, size_t num_tokens)
+jsmn_parser	jsmn.h	/^} jsmn_parser;$/;"	t	typeref:struct:__anon4
+jsmnerr_t	jsmn.h	/^} jsmnerr_t;$/;"	t	typeref:enum:__anon2
+jsmntok_t	jsmn.h	/^} jsmntok_t;$/;"	t	typeref:struct:__anon3
+jsmntype_t	jsmn.h	/^} jsmntype_t;$/;"	t	typeref:enum:__anon1
+main	jsmn_test.c	/^int main() {$/;"	f
+main	parser_test.c	/^int main(int argc, char *argv[]) {$/;"	f	signature:(int argc, char *argv[])
+parent	jsmn.h	/^	int parent;$/;"	m	struct:__anon3
+parse_array	jsmn_extension.c	/^parse_array(jsmntok_t ** tok, string_t * s, string_t * loc, void (*process)(void *, string_t *, char *, int), void * workspace) {$/;"	f	signature:(jsmntok_t ** tok, string_t * s, string_t * loc, void (*process)(void *, string_t *, char *, int), void * workspace)
+parse_array	jsmn_extension.h	/^parse_array(jsmntok_t ** tok, string_t * s, string_t * loc, void (*process)(void *, string_t *, char *, int), void * workspace);$/;"	p	signature:(jsmntok_t ** tok, string_t * s, string_t * loc, void (*process)(void *, string_t *, char *, int), void * workspace)
+parse_object	jsmn_extension.c	/^parse_object(jsmntok_t ** tok, string_t * s, string_t * loc, void (*process)(void *, string_t *, char *, int), void * workspace) {$/;"	f	signature:(jsmntok_t ** tok, string_t * s, string_t * loc, void (*process)(void *, string_t *, char *, int), void * workspace)
+parse_object	jsmn_extension.h	/^parse_object(jsmntok_t ** tok, string_t * s, string_t * loc, void (*process)(void *, string_t *, char *, int), void * workspace);$/;"	p	signature:(jsmntok_t ** tok, string_t * s, string_t * loc, void (*process)(void *, string_t *, char *, int), void * workspace)
+pos	jsmn.h	/^	unsigned int pos; \/* offset in the JSON string *\/$/;"	m	struct:__anon4
+process	tmp.c	/^process(void * workspace, string_t * s, char * data, int data_len) {$/;"	f	signature:(void * workspace, string_t * s, char * data, int data_len)
+process_batch	tmp.c	/^process_batch(stinger_t * S, int64_t batch_size, int64_t chunk_size) {$/;"	f	signature:(stinger_t * S, int64_t batch_size, int64_t chunk_size)
+process_json	jsmn_extension.c	/^process_json(string_t * s, string_t * loc, long int * token_count, jsmntok_t ** tokens, void (*process)(void *, string_t *, char *, int), void * workspace) {$/;"	f	signature:(string_t * s, string_t * loc, long int * token_count, jsmntok_t ** tokens, void (*process)(void *, string_t *, char *, int), void * workspace)
+process_json	jsmn_extension.h	/^process_json(string_t * s, string_t * loc, long int * token_count, jsmntok_t ** tokens, void (*process)(void *, string_t *, char *, int), void * workspace);$/;"	p	signature:(string_t * s, string_t * loc, long int * token_count, jsmntok_t ** tokens, void (*process)(void *, string_t *, char *, int), void * workspace)
+process_json_stream	jsmn_extension.c	/^process_json_stream(FILE * file, int count, void (*process)(void *, string_t *, char *, int), void (*post_process)(void*), void * workspace) {$/;"	f	signature:(FILE * file, int count, void (*process)(void *, string_t *, char *, int), void (*post_process)(void*), void * workspace)
+process_json_stream	jsmn_extension.h	/^process_json_stream(FILE * file, int count, void (*process)(void *, string_t *, char *, int), void (*post_process)(void*), void * workspace);$/;"	p	signature:(FILE * file, int count, void (*process)(void *, string_t *, char *, int), void (*post_process)(void*), void * workspace)
+process_test	parser_test.c	/^process_test(void * workspace, string_t * s, char * data, int data_len) {$/;"	f	signature:(void * workspace, string_t * s, char * data, int data_len)
+retweets	tmp.c	/^  int64vector_t * retweets;$/;"	m	struct:workspace	file:
+s:cpo_save	.session.vim	/^let s:cpo_save=&cpo$/;"	v
+s:l	.session.vim	/^let s:l = 1 - ((0 * winheight(0) + 20) \/ 41)$/;"	v
+s:l	.session.vim	/^let s:l = 112 - ((40 * winheight(0) + 20) \/ 41)$/;"	v
+s:l	.session.vim	/^let s:l = 2 - ((1 * winheight(0) + 20) \/ 41)$/;"	v
+s:l	.session.vim	/^let s:l = 3 - ((2 * winheight(0) + 20) \/ 41)$/;"	v
+s:l	.session.vim	/^let s:l = 4 - ((3 * winheight(0) + 20) \/ 41)$/;"	v
+s:so_save	.session.vim	/^let s:so_save = &so | let s:siso_save = &siso | set so=0 siso=0$/;"	v
+s:sx	.session.vim	/^let s:sx = expand("<sfile>:p:r")."x.vim"$/;"	v
+s:wipebuf	.session.vim	/^  let s:wipebuf = bufnr('%')$/;"	v
+screenname	tmp.c	/^  int64vector_t * screenname;$/;"	m	struct:workspace	file:
+size	jsmn.h	/^	int size;$/;"	m	struct:__anon3
+start	jsmn.h	/^	int start;$/;"	m	struct:__anon3
+test	jsmn_test.c	/^static void test(int (*func)(void), const char *name) {$/;"	f	file:	signature:(int (*func)(void), const char *name)
+test_array_nomem	jsmn_test.c	/^int test_array_nomem() {$/;"	f
+test_empty	jsmn_test.c	/^int test_empty() {$/;"	f
+test_failed	jsmn_test.c	/^static int test_failed = 0;$/;"	v	file:
+test_objects_arrays	jsmn_test.c	/^int test_objects_arrays() {$/;"	f
+test_partial_array	jsmn_test.c	/^int test_partial_array() {$/;"	f
+test_partial_string	jsmn_test.c	/^int test_partial_string() {$/;"	f
+test_passed	jsmn_test.c	/^static int test_passed = 0;$/;"	v	file:
+test_primitive	jsmn_test.c	/^int test_primitive() {$/;"	f
+test_simple	jsmn_test.c	/^int test_simple() {$/;"	f
+test_string	jsmn_test.c	/^int test_string() {$/;"	f
+test_unquoted_keys	jsmn_test.c	/^int test_unquoted_keys() {$/;"	f
+this_be_test	test.c	/^this_be_test(string_t * whaaaat, int real_deal) {$/;"	f	signature:(string_t * whaaaat, int real_deal)
+toknext	jsmn.h	/^	int toknext; \/* next token to allocate *\/$/;"	m	struct:__anon4
+toksuper	jsmn.h	/^	int toksuper; \/* superior token node, e.g parent object or array *\/$/;"	m	struct:__anon4
+tweetid	tmp.c	/^  int64vector_t * tweetid;$/;"	m	struct:workspace	file:
+type	jsmn.h	/^	jsmntype_t type;$/;"	m	struct:__anon3
+vertex_type	tmp.c	/^typedef enum vertex_type {$/;"	g	file:
+vertex_type_strings	tmp.c	/^const char * const vertex_type_strings [] = {$/;"	v
+vertex_type_t	tmp.c	/^} vertex_type_t;$/;"	t	typeref:enum:vertex_type	file:
+workspace	tmp.c	/^typedef struct workspace {$/;"	s	file:
+workspace_free	tmp.c	/^workspace_free(workspace_t ** w) {$/;"	f	signature:(workspace_t ** w)
+workspace_new	tmp.c	/^workspace_new(stinger_t * S) {$/;"	f	signature:(stinger_t * S)
+workspace_t	tmp.c	/^} workspace_t;$/;"	t	typeref:struct:workspace	file:
+workspace_to_edges	tmp.c	/^workspace_to_edges(workspace_t * w) {$/;"	f	signature:(workspace_t * w)
+workspace_truncate	tmp.c	/^workspace_truncate(workspace_t * w) {$/;"	f	signature:(workspace_t * w)
+zt	.session.vim	/^normal! zt$/;"	m

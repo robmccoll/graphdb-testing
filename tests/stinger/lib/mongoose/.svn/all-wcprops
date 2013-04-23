@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/graphs/!svn/ver/582/stinger/branches/rad/lib/mongoose
+END
+mongoose.c
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/graphs/!svn/ver/555/stinger/branches/rad/lib/mongoose/mongoose.c
+END
+UserManual.md
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/graphs/!svn/ver/555/stinger/branches/rad/lib/mongoose/UserManual.md
+END
+README.md
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/graphs/!svn/ver/555/stinger/branches/rad/lib/mongoose/README.md
+END
+mongoose.h
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/graphs/!svn/ver/555/stinger/branches/rad/lib/mongoose/mongoose.h
+END
+Makefile
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/graphs/!svn/ver/582/stinger/branches/rad/lib/mongoose/Makefile
+END
+LICENSE
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/graphs/!svn/ver/555/stinger/branches/rad/lib/mongoose/LICENSE
+END
+main.c
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/graphs/!svn/ver/555/stinger/branches/rad/lib/mongoose/main.c
+END

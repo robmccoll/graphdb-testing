@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/graphs/!svn/ver/576/stinger/branches/rad/src/core
+END
+stinger-iterator.c
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/graphs/!svn/ver/532/stinger/branches/rad/src/core/stinger-iterator.c
+END
+stinger-workflow.c
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/graphs/!svn/ver/569/stinger/branches/rad/src/core/stinger-workflow.c
+END
+stinger-vertex.c
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/graphs/!svn/ver/576/stinger/branches/rad/src/core/stinger-vertex.c
+END
+stinger-return.c
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/graphs/!svn/ver/532/stinger/branches/rad/src/core/stinger-return.c
+END
+stinger-deprecated.c
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/graphs/!svn/ver/532/stinger/branches/rad/src/core/stinger-deprecated.c
+END
+stinger-physmap.c
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/graphs/!svn/ver/576/stinger/branches/rad/src/core/stinger-physmap.c
+END
+stinger.c
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/graphs/!svn/ver/576/stinger/branches/rad/src/core/stinger.c
+END

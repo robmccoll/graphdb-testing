@@ -1,0 +1,640 @@
+char * vquery_html = 
+<div class="container">
+	<div class="row">
+		<h2>Query</h2>
+		<div class="span6"><div class="well">
+			<h3>Egonet</h3>
+			<form action="">
+				<dl class="dl-horizontal">
+					<dt>Vertex (STINGER ID)</dt>
+					<dd>
+					<div class="input-append">
+						<input class="span2" id="newegonet" type="text">
+						<button class="btn" type="button" onclick="changeEgonet(this.form)">Go</button>
+					</div>
+					</dd>
+					<dt>Vertex (Physical ID)</dt>
+					<dd>
+					<div class="input-append">
+						<input class="span2" id="newegonetphys" type="text">
+						<button class="btn" type="button" onclick="changeEgonetByPhysID(this.form)">Go</button>
+					</div>
+					</dd>
+				</dl>
+			</form>
+		</div>
+		   <div class="well">
+			  <h3>Neighbors</h3>
+			  <dl class="dl-horizontal">
+			  <dt>Weight</dt>
+			  <dd>
+			      <input class="span3" id="vweightMin" type="text" placeholder="Min">
+			      <input class="span3" id="vweightMax" type="text" placeholder="Max">
+			  </dd>
+			  <dt>Type</dt>
+			  <dd>
+			      <input class="span3" id="vtype" type="text" placeholder="Ex: 1,2,7">
+			  </dd>
+			  <dt>Degree</dt>
+			  <dd>
+			      <input class="span3" id="vdegreeMin" type="text" placeholder="Min">
+			      <input class="span3" id="vdegreeMax" type="text" placeholder="Max">
+			  </dd>
+			  <dt></dt>
+			  <dd><div class="btn-grp"><a class="btn" onclick="forceGraph()">Apply</a><a class="btn" onclick="resetVertices()">Clear</a></div></dd>
+			  </dl>
+		   </div>
+		</div>
+		<div class="span6">
+		   <div class="well">
+			  <h3>Edges</h3>
+			  <dl class="dl-horizontal">
+			  <dt>Weight</dt>
+			  <dd>
+			      <input class="span3" id="eweightMin" type="text" placeholder="Min">
+			      <input class="span3" id="eweightMax" type="text" placeholder="Max">
+			  </dd>
+			  <dt>Type</dt>
+			  <dd>
+			      <input class="span3" id="etype" type="text" placeholder="Ex: 1,2,7">
+			  </dd>
+			  <dt>Created After</dt>
+			  <dd>
+			      <input class="span3" id="createdAfter" type="text" placeholder="">
+			  </dd>
+			  <dt>Created Before</dt>
+			  <dd>
+			      <input class="span3" id="createdBefore" type="text" placeholder="">
+			  </dd>
+			  <dt>Modified After</dt>
+			  <dd>
+			      <input class="span3" id="modifiedAfter" type="text" placeholder="">
+			  </dd>
+			  <dt>Modified Before</dt>
+			  <dd>
+			      <input class="span3" id="modifiedBefore" type="text" placeholder="">
+			  </dd>
+			  <dt></dt>
+			  <dd><div class="btn-grp"><a class="btn" onclick="forceGraph()">Apply</a><a class="btn" onclick="resetEdges()">Clear</a></div></dd>
+			  </dl>
+		  </div>
+	      </div>
+	</div>
+	<div class="row">
+		<h2 class="egotitle"></h2>
+		<div class="span12"><div class="well">
+			<p class="text-center">
+				&nbsp;<graph></graph>&nbsp;
+			</p>
+	</div></div></div>
+	<div class="row">
+	<div class="span6">
+			<dl class="dl-horizontal">
+			  <dt>Highlighting</dt>
+			  <dd><label class="checkbox"><input name="highlightCenterVertexCB" id="highlightCenterVertexCB" type="checkbox" checked="true" onclick="highlightCenterVertex(this.checked);">Highlight Central Vertex</label></dd>
+			  <dt></dt>
+			  <dd><label class="checkbox"><input name="highlightCenterVertexCB" id="highlightCenterEdgesCB" type="checkbox" checked="true" onclick="highlightEdgesOfPrev();">Highlight Central Edges</label></dd>
+			  <dt></dt>
+			  <dd><label class="checkbox"><input name="stayLit" id="stayLit" type="checkbox" checked="true" onclick="">Keep Mouseover Highlights</label></dd>
+			</dl>
+		  </div>
+	<div class="span6">
+	  <dl class="dl-horizontal">
+	      <dt>Layout</dt><dd><div class="btn-grp"><a class="btn btn-success" onclick="unpauseLayout()" >Start</a><a class="btn btn-danger" onclick="pauseLayout()" >Stop</a></div></dd>
+	  </dl>
+	</div></div>
+	<div class="row">
+	<h2>Result</h2>
+	<h3>Neighbors</h3>
+	<table class="table">
+	<thead id="neighborshead"></thead>
+	<tbody id="neighborsbody"></tbody>
+	</table>
+	<h3>Edges</h3>
+	<table class="table">
+	<thead id="edgeshead"></thead>
+	<tbody id="edgesbody"></tbody>
+	</table>
+	<h3>Neighbors' Edges</h3>
+	<table class="table">
+	<thead id="nedgeshead"></thead>
+	<tbody id="nedgesbody"></tbody>
+	</table>
+	</div>
+</div>
+<script> 
+
+/***************************
+* initialization and globals
+*/
+
+var width = 880, 
+    height = 480; 
+
+var color = d3.scale.category20(); 
+
+var svglinks, svgnodes;
+var nodedata, linkdata;
+var graphjson;
+var egonetsource;
+
+var force = d3.layout.force() 
+  .charge(-100) 
+  .linkDistance(80) 
+  .size([width, height]); 
+
+var svg = d3.select("graph").append("svg") 
+  .attr("class", "theGraph")
+  .attr("width", width) 
+  .attr("height", height); 
+
+
+d3.json("/vquery/data/%ld", function(error, graph) { 
+    graphjson = graph;
+    egonetsource = graph.vertices[0]; 
+    d3.select(".egotitle").text("Egonet of " + egonetsource.vid + " : " + ((egonetsource.physID.len > 0) ? egonetsource.phydID.id : "")); 
+
+    svglinks = svg.selectAll(".link");
+    svgnodes = svg.selectAll(".node");
+
+    resetGraph();
+}); 
+
+/*******************
+* Begin functions
+*/
+
+function resetVertices() {
+  get("vweightMin").value = "";
+  get("vweightMax").value = "";
+  get("vdegreeMin").value = "";
+  get("vdegreeMax").value = "";
+  get("vtype").value = "";
+
+  resetGraph();
+}
+
+function resetEdges() {
+  get("eweightMin").value = "";
+  get("eweightMax").value = "";
+  get("etype").value = "";
+  get("createdAfter").value = "";
+  get("createdBefore").value = "";
+  get("modifiedAfter").value = "";
+  get("modifiedBefore").value = "";
+
+  resetGraph();
+}
+
+function resetGraph() {
+    nodedata = graphjson.vertices;
+    linkdata = graphjson.edges;
+
+    forceGraph();
+}
+
+function forceGraph() {
+    nodedata = nodedata.filter(vertexFilter);
+    linkdata = linkdata.filter(edgeFilter);
+    nodedata = nodedata.filter(vertexFilter);
+
+    force 
+      .nodes(nodedata) 
+      .links(linkdata) 
+      .linkDistance(4 * nodedata.length) 
+      .start(); 
+
+    svglinks = svglinks.data(linkdata);
+
+    svglinks.enter().append("line") 
+      .attr("class", "link") 
+      .style("stroke-width", function(d) { return 2 * Math.sqrt(d.weight); }) 
+      .style("stroke", function(d) { if(d.source == egonetsource || d.target == egonetsource) return "#f00"; else return color(d.type); }) 
+      .style("stroke-opacity", function(d) { if(d.source == egonetsource || d.target == egonetsource) return 1.0; else return 0.4; }); 
+
+    svglinks.exit().remove();
+
+    svgnodes = svgnodes.data(nodedata);
+
+    svgnodes.enter()
+      .append("circle") 
+      .attr("class", "node") 
+      .attr("r", 5) 
+      .on("mouseover", function(d, i) { d3.select(this).style("fill", "green"); highlightEdgesOf(true, d); })
+      .on("mouseout", function(d, i) { d3.select(this).style("fill", function(d) {if(d == egonetsource && document.getElementById("highlightCenterVertexCB").checked) return "red"; else return color(d.vtype); }); if(!document.getElementById("stayLit").checked) highlightEdgesOf(false, d); })
+      .style("fill", function(d) { if(d == egonetsource) return "red"; else return color(d.vtype); }) 
+      .call(force.drag)
+      .on("dblclick", function(d) { window.location = "/vquery/" + d.vid; })
+      .append("title") 
+      .text(function(d) { return "StingerID: " + d.vid + "\n" + "Name: " + d.physID.id + "\n" + "Type: " + d.vtype + "\n" + "Weight: " + d.vweight + "\n" + "Degree: " + d.outDegree; });
+
+    svgnodes.exit().remove();
+
+    updateNeighborsTable(nprevAttrName);
+    updateEdgesTable(eprevAttrName);
+    updateNEdgesTable(neprevAttrName);
+    highlightEdgesOfPrev();
+
+    force.on("tick", function() { 
+      svglinks.attr("x1", function(d) { return d.source.x; }) 
+	.attr("y1", function(d) { return d.source.y; }) 
+	.attr("x2", function(d) { return d.target.x; }) 
+	.attr("y2", function(d) { return d.target.y; }); 
+
+      svgnodes.attr("cx", function(d) { return d.x; }) 
+	.attr("cy", function(d) { return d.y; }); 
+    }); 
+}
+
+/* dom shortcut */
+function get(id) {
+  return document.getElementById(id);
+}
+
+function hadEdges(vid) {
+  for(l in linkdata) {
+    if(linkdata[l].src == vid || linkdata[l].dest == vid)
+      return true;
+  }
+  return false;
+}
+
+/* filter on a sinlge vertex for d3's filter call */
+function vertexFilter(d) {
+  minweight = get("vweightMin").value;
+  if(minweight != "" && d.vweight < minweight)
+    return null;
+
+  maxweight = get("vweightMax").value;
+  if(maxweight != "" && maxweight < d.vweight)
+    return null;
+
+  mindegree = get("vdegreeMin").value;
+  if(mindegree != "" && d.outDegree < mindegree)
+    return null;
+
+  maxdegree = get("vdegreeMax").value;
+  if(maxdegree != "" && maxdegree < d.outDegree)
+    return null;
+
+  types = get("vtype").value.split(",");
+  if(types[0] != "") {
+    typefound = false;
+    for(t in types) {
+      if(types[t] == d.vtype)
+        typefound = true;
+    }
+    if(!typefound)
+      return null;
+  }
+
+  if(!hadEdges(d.vid))
+    return null;
+
+  return this;
+}
+
+function containsVid(arr, v) {
+  for(a in arr) {
+    if(arr[a].vid == v)
+      return true;
+  }
+  return false;
+}
+
+/* filter function on edges for d3's filter call */
+function edgeFilter(d) {
+  minweight = get("eweightMin").value;
+  if(minweight != "" && d.weight < minweight)
+    return null;
+
+  maxweight = get("eweightMax").value;
+  if(maxweight != "" && maxweight < d.weight)
+    return null;
+
+  types = get("etype").value.split(",");
+  if(types[0] != "") {
+    typefound = false;
+    for(t in types) {
+      if(types[t] == d.type)
+	typefound = true;
+    }
+    if(!typefound)
+      return null;
+  }
+
+  createafter = get("createdAfter").value;
+  if(createafter != "" && createafter > d.time1)
+    return null;
+
+  createbefore = get("createdBefore").value;
+  if(createbefore != "" && createbefore < d.time1)
+    return null;
+
+  modifyafter = get("modifiedAfter").value;
+  if(modifyafter != "" && modifyafter > d.time2)
+    return null;
+
+  modifybefore = get("modifiedBefore").value;
+  if(modifybefore != "" && modifybefore < d.time2)
+    return null;
+
+  if(!containsVid(nodedata, d.src) || !containsVid(nodedata, d.dest))
+    return null;
+
+  return this;
+}
+
+function changeEgonet(form) { 
+  window.location = "/vquery/" + form.newegonet.value; 
+} 
+
+function changeEgonetByPhysID(form) { 
+  window.location = "/vquery/byphysid/" + form.newegonetphys.value; 
+} 
+
+function highlightCenterVertex(value) { 
+  if(value) {
+    svgnodes.style("fill", function(d) { if(d == egonetsource) return "red"; else return color(d.vtype); }) 
+  } else {
+    svgnodes.style("fill", function(d) { return color(d.vtype); }) 
+  }
+} 
+
+function highlightEdgesOfPrev() {
+  highlightEdgesOf(prevHighlightEdges.value, prevHighlightEdges.vtx);
+}
+
+var prevHighlightEdges = { "value": false, "vtx": -1 };
+function highlightEdgesOf(value, vtx) { 
+  prevHighlightEdges.value = value;
+  prevHighlightEdges.vtx = vtx;
+
+  if(value) {
+    neighbors = new Object();
+    if(document.getElementById("highlightCenterEdgesCB").checked) {
+      svglinks
+	.style("stroke-width", function(d) { return 2 * Math.sqrt(d.weight); }) 
+	.style("stroke", function(d) { 
+	  if(d.source.vid == egonetsource.vid || d.target.vid == egonetsource.vid) 
+	    return "#f00"; 
+	  else if(d.target == vtx) { 
+	    neighbors[d.source.vid] = 1; 
+	    return "green";  
+	  } else if (d.source == vtx) {
+	    neighbors[d.target.vid] = 1; 
+	    return "green"; 
+	  } else 
+	  return color(d.type); 
+	}) 
+	.style("stroke-opacity", function(d) { if(d.source.vid == egonetsource.vid || d.target.vid == egonetsource.vid) return 1.0; else if(d.target == vtx || d.source == vtx) return 1.0; else return 0.2; }); 
+    } else {
+      svglinks
+	.style("stroke-width", function(d) { return 2 * Math.sqrt(d.weight); }) 
+	.style("stroke", function(d) { 
+	  if(d.target == vtx) { 
+	    neighbors[d.source.vid] = 1; 
+	    return "green";  
+	  } else if (d.source == vtx) {
+	    neighbors[d.target.vid] = 1; 
+	    return "green"; 
+	  } else 
+	  return color(d.type); 
+	}) 
+	.style("stroke-opacity", function(d) { if(d.target == vtx || d.source == vtx) return 1.0; else return 0.2; }); 
+    }
+    highlightVertexRows(vtx.vid, neighbors, "green", "blue");
+    highlightEdgeRows(vtx.vid, neighbors, "green");
+    highlightNEdgeRows(vtx.vid, neighbors, "green");
+  } else {
+    if(document.getElementById("highlightCenterEdgesCB").checked) {
+      svglinks
+	.style("stroke-width", function(d) { return 2 * Math.sqrt(d.weight); }) 
+	.style("stroke", function(d) { if(d.source.vid == egonetsource.vid || d.target.vid == egonetsource.vid) return "#f00"; else return color(d.type); }) 
+	.style("stroke-opacity", function(d) { if(d.source.vid == egonetsource.vid || d.target.vid == egonetsource.vid) return 1.0; else return 0.4; }); 
+    } else {
+      svglinks
+	.style("stroke-width", function(d) { return 2 * Math.sqrt(d.weight); }) 
+	.style("stroke", function(d) { return color(d.type); }) 
+	.style("stroke-opacity", function(d) { return 0.4; }); 
+    }
+    highlightVertexRows(-1, {}, "green", "blue");
+    highlightEdgeRows(-1, {}, "green");
+    highlightNEdgeRows(-1, {}, "green");
+  }
+} 
+
+function pauseLayout() {
+  for(n in nodedata) {
+    nodedata[n].fixed = 1;
+  }
+
+  /* stoppble force object */
+  force.stop();
+}
+
+function unpauseLayout() {
+  for(n in nodedata) {
+    nodedata[n].fixed = 0;
+  }
+
+  /* do or do not, there is no try */
+  force.resume();
+}
+
+var nth, ntr, ntd, nprevAttrName = "vid";
+function updateNeighborsTable(attrName) {
+  nprevAttrName = attrName;
+
+  var reserved = ["fixed","weight","x","y","px","py","index","inDegree"]; /* in degree and out are the same, lets just use one */
+  d3.select("#neighborsbody").selectAll("tr").remove();
+  names = {"vid":"STINGER ID", "vtype":"Type", "vweight":"Weight", "outDegree":"Degree", "physID":"Physical ID"};
+
+  // Header
+  nth = d3.select("#neighborshead").selectAll("th")
+    .data(jsonToArray(nodedata[0], reserved))
+    .enter().append("th")
+    .attr("onclick", function (d, i) { return "updateNeighborsTable('" + d[0] + "');";})
+    .text(function(d) { return names[d[0]]; })
+
+  // Rows
+  ntr = d3.select("#neighborsbody").selectAll("tr")
+    .data(nodedata)
+    .enter().append("tr")
+    .sort(function (a, b) { return a == null || b == null ? 0 : (attrName == "physID" ? stringCompare(a[attrName].id, b[attrName].id) : stringCompare(a[attrName], b[attrName])); });
+
+  // Cells
+  ntd = ntr.selectAll("td")
+    .data(function(d) { return jsonToArray(d, reserved); })
+    .enter().append("td")
+    .attr("onclick", function (d, i) { return "updateNeighborsTable('" + d[0] + "');";})
+    .text(function(d) { return d[0] == "physID" ? d[1].id : d[1]; });
+
+  highlightVertexRowsPrev();
+}
+
+var eth, etr, etd, eprevAttrName = "dest";
+function updateEdgesTable(attrName) {
+  eprevAttrName = attrName;
+
+  var reserved = ["source", "target", "fixed"];
+  d3.select("#edgesbody").selectAll("tr").remove();
+  names = {"type":"Type", "src":"Source", "dest":"Destination", "weight":"Weight", "time1":"Create Time", "time2" : "Modify Time"};
+
+  // Header
+  eth = d3.select("#edgeshead").selectAll("th")
+    .data(jsonToArray(linkdata[0], reserved))
+    .enter().append("th")
+    .attr("onclick", function (d, i) { return "updateEdgesTable('" + d[0] + "');";})
+    .text(function(d) { return names[d[0]]; })
+
+  // Rows
+  etr = d3.select("#edgesbody").selectAll("tr")
+    .data(linkdata.filter(function(d) { if(d.src != egonetsource.vid && d.dest != egonetsource.vid) return null; else return this; }))
+    .enter().append("tr")
+    .sort(function (a, b) { return a == null || b == null ? 0 : (attrName == "physID" ? stringCompare(a[attrName].id, b[attrName].id) : stringCompare(a[attrName], b[attrName])); });
+
+  // Cells
+  etd = etr.selectAll("td")
+    .data(function(d) { return jsonToArray(d, reserved); })
+    .enter().append("td")
+    .attr("onclick", function (d, i) { return "updateEdgesTable('" + d[0] + "');";})
+    .text(function(d) { return d[0] == "physID" ? d[1].id : d[1]; });
+
+  highlightEdgeRowsPrev();
+}
+
+var neth, netr, netd, neprevAttrName = "src";
+function updateNEdgesTable(attrName) {
+  neprevAttrName = attrName;
+
+  var reserved = ["source", "target", "fixed"];
+  d3.select("#nedgesbody").selectAll("tr").remove();
+  names = {"type":"Type", "src":"Source", "dest":"Destination", "weight":"Weight", "time1":"Create Time", "time2" : "Modify Time"};
+
+  // Header
+  neth = d3.select("#nedgeshead").selectAll("th")
+    .data(jsonToArray(linkdata[0], reserved))
+    .enter().append("th")
+    .attr("onclick", function (d, i) { return "updateNEdgesTable('" + d[0] + "');";})
+    .text(function(d) { return names[d[0]]; })
+
+  // Rows
+  netr = d3.select("#nedgesbody").selectAll("tr")
+    .data(linkdata.filter(function(d) { if(d.src == egonetsource.vid || d.dest == egonetsource.vid) return null; else return this; }))
+    .enter().append("tr")
+    .sort(function (a, b) { return a == null || b == null ? 0 : (attrName == "physID" ? stringCompare(a[attrName].id, b[attrName].id) : stringCompare(a[attrName], b[attrName])); });
+
+  // Cells
+  netd = netr.selectAll("td")
+    .data(function(d) { return jsonToArray(d, reserved); })
+    .enter().append("td")
+    .attr("onclick", function (d, i) { return "updateNEdgesTable('" + d[0] + "');";})
+    .text(function(d) { return d[0] == "physID" ? d[1].id : d[1]; });
+
+  highlightNEdgeRowsPrev();
+}
+
+function highlightVertexRowsPrev() {
+  highlightVertexRows(prevVertexRows.vtx, prevVertexRows.neighbors, prevVertexRows.color1, prevVertexRows.color2);
+}
+
+var prevVertexRows = {"vtx":-1, "neighbors":{}, "color1":"green", "color2":"blue"};
+function highlightVertexRows(vtx, neighbors, color1, color2) {
+  prevVertexRows.vtx = vtx;
+  prevVertexRows.neighbors = neighbors;
+  prevVertexRows.color1 = color1;
+  prevVertexRows.color2 = color2;
+
+  ntr.style("background-color", function(d) { 
+    if(d.vid == egonetsource.vid && document.getElementById("highlightCenterVertexCB").checked) {
+      return "red";
+    } else if(vtx == d.vid) { 
+      return color1; 
+    } else if (neighbors[d.vid]) {
+      return color2;
+    }return this.backgroundColor; });
+}
+
+function stringCompare(a, b) {
+  if(typeof(a) == "string")
+    a = a.toLowerCase();
+  if(typeof(b) == "string")
+    b = b.toLowerCase();
+  return a > b ? 1 : a == b ? 0 : -1;
+}
+
+function highlightEdgeRowsPrev() {
+  highlightEdgeRows(prevEdgeRows.vtx, prevEdgeRows.neighbors, prevEdgeRows.color1);
+}
+
+var prevEdgeRows = {"vtx":-1, "neighbors":{}, "color1":"green"};
+function highlightEdgeRows(vtx, neighbors, color1) {
+  prevEdgeRows.vtx = vtx;
+  prevEdgeRows.neighbors = neighbors;
+  prevEdgeRows.color1 = color1;
+
+  etr.style("background-color", function(d) { 
+    if(vtx == d.src || vtx == d.dest) { 
+      return color1; 
+    }
+  });
+}
+
+function highlightNEdgeRowsPrev() {
+  highlightNEdgeRows(prevNEdgeRows.vtx, prevNEdgeRows.neighbors, prevNEdgeRows.color1);
+}
+
+var prevNEdgeRows = {"vtx":-1, "neighbors":{}, "color1":"green"};
+function highlightNEdgeRows(vtx, neighbors, color1) {
+  prevNEdgeRows.vtx = vtx;
+  prevNEdgeRows.neighbors = neighbors;
+  prevNEdgeRows.color1 = color1;
+
+  netr.style("background-color", function(d) { 
+    if(vtx == d.src || vtx == d.dest) { 
+      return color1; 
+    }
+  });
+}
+
+function stringCompare(a, b) {
+  if(typeof(a) == "string")
+    a = a.toLowerCase();
+  if(typeof(b) == "string")
+    b = b.toLowerCase();
+  return a > b ? 1 : a == b ? 0 : -1;
+}
+
+function jsonKeyValueToArray(k, v) {return [k, v];}
+
+function jsonToArray(json, reserved) {
+  /* ignore d3's storage values */
+  var ret = new Array();
+  var key;
+  for (key in json) {
+    ignore = false;
+    for(r in reserved) {
+      if(reserved[r] == key) {
+	ignore = true;
+	break;
+      }
+    }
+    if (json.hasOwnProperty(key) && !ignore) {
+      ret.push(jsonKeyValueToArray(key, json[key]));
+    }
+  }
+  return ret;
+};
+
+function dump(obj) {
+  var out = "";
+  for (var i in obj) {
+    out += i + ": " + obj[i] + "\n";
+  }
+  console.log(out);
+}
+
+</script>
+</body>
+</html>
