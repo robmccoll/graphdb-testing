@@ -1,6 +1,8 @@
 #include  <cstdio>
 #include  <omp.h>
 #include  <vector>
+#include <sys/time.h>
+#include <sys/resource.h>
 
 #include    "mtgl/adjacency_list.hpp"
 #include    "mtgl/breadth_first_search.hpp"
@@ -14,6 +16,8 @@ extern "C" {
 #define E(X) E_A(X,NULL)
 #define V_A(X,...) fprintf(stdout, "%s %s %d:\n\t" #X "\n", __FILE__, __func__, __LINE__, __VA_ARGS__);
 #define V(X) V_A(X,NULL)
+#define R_A(X,...) fprintf(stdout, "RSLT: " X, __VA_ARGS__);
+#define R(X) R_A(X,NULL)
 
 using namespace mtgl;
 
@@ -349,6 +353,9 @@ int main(int argc, char *argv[]) {
     E_A(Not enough arguments. Usage %s graphfile actionsfile, argv[0]);
   }
 
+  R("{\n")
+  R("\"type\":\"mtgl\",\n")
+
   FILE * fp = fopen(argv[1], "r");
 
   int64_t nv;
@@ -377,6 +384,10 @@ int main(int argc, char *argv[]) {
 
   fclose(fp);
 
+  R_A("\"nv\":%ld,\n", nv)
+  R_A("\"ne\":%ld,\n", ne)
+  R("\"results\": {\n")
+
   V(Creating graph...);
 
   typedef adjacency_list<undirectedS> Graph;
@@ -393,6 +404,7 @@ int main(int argc, char *argv[]) {
 
 
   V(Loading data into graph...);
+  tic();
   for(uint64_t v = 0; v < nv; v++) {
     for(uint64_t i = off[v]; i < off[v+1]; i++) {
       src[i] = v; dst[i] = ind[i];
@@ -401,6 +413,12 @@ int main(int argc, char *argv[]) {
 
   Graph g;
   init(nv, ne, src, dst, g);
+
+  double build_time = toc();
+  R("\"build\": {\n")
+  R("\"name\":\"mtgl-std\",\n")
+  R_A("\"time\":%le\n", build_time)
+  R("},\n")
 
   free(off); free(ind); free(wgt);
   delete[] src;
@@ -415,7 +433,14 @@ int main(int argc, char *argv[]) {
 
   size_type count = shiloach_vishkin(g, componentsMap);
 
-  printf("\tDone %lf\n", toc());
+  double sv_time = toc();
+
+  R("\"sv\": {\n")
+  R("\"name\":\"mtgl-std\",\n")
+  R_A("\"time\":%le\n", sv_time)
+  R("},\n")
+
+  printf("\tDone %lf\n", sv_time);
   printf("\tComponents %ld\n", count);
 
 
@@ -433,8 +458,14 @@ int main(int argc, char *argv[]) {
 
   breadth_first_search(g, verts[0], hop_count);
 
-  printf("\tDone %lf\n", toc());
+  double sssv_time = toc();
 
+  R("\"sssp\": {\n")
+  R("\"name\":\"mtgl-std\",\n")
+  R_A("\"time\":%le\n", sssv_time)
+  R("},\n")
+
+  printf("\tDone %lf\n", sssv_time);
 
   V(PageRank...);
 
@@ -446,7 +477,14 @@ int main(int argc, char *argv[]) {
 
   int iterations = pagerank_omp(g, ranks, epsilon, dampingfactor, maxiter);
 
-  printf("\tDone %lf\n", toc());
+  double pr_time = toc();
+
+  R("\"pr\": {\n")
+  R("\"name\":\"mtgl-std\",\n")
+  R_A("\"time\":%le\n", pr_time)
+  R("},\n")
+
+  printf("\tDone %lf\n", pr_time);
   printf("\tIterations %d\n", iterations);
 
   V(Reading actions...)
@@ -493,6 +531,21 @@ int main(int argc, char *argv[]) {
       //remove_edge(j, i, g);
     }
   }
-  printf("\tDone %lf\n", toc());
+
+  double eps = na / toc();
+
+  R("\"update\": {\n")
+  R("\"name\":\"mtgl-insertonly\",\n")
+  R_A("\"time\":%le\n", eps)
+  R("}\n")
+  R("},\n")
+
+  struct rusage usage;
+  getrusage(RUSAGE_SELF, &usage);
+
+  R_A("\"na\":%ld,\n", na)
+  R_A("\"mem\":%ld\n", usage.ru_maxrss)
+  R("}\n")
+  printf("\tDone %lf\n", eps);
   free(actions);
 }
