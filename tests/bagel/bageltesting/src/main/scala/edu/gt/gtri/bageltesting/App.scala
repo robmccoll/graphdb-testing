@@ -1,4 +1,5 @@
 package spark.bagel.examples
+import java.lang.management._
 
 import spark._
 import spark.SparkContext._
@@ -71,6 +72,10 @@ object App {
   }
 
   class EdgeMessage (val targetId: Int, val destId: Int) extends Message[Int] with Serializable
+
+  def R(result : String) {
+    println("RSLT: " + result);
+  }
   
   def main(args : Array[String]) {
     println( "Up and running..." )
@@ -83,6 +88,8 @@ object App {
     printf("Reading graph from disk... %s\n", args(0))
 
     val graphIn = new FileInputStream(args(0))
+    var startTime : Long = 0
+    var endTime : Long = 0
 
     val endian = readLittleLong(graphIn)
     if(endian != 0x1234ABCD) {
@@ -102,8 +109,16 @@ object App {
 
     println("\tDone\n")
 
+    R("{");
+    R("\"type\":\"bagel\",");
+    R("\"nv\":" + nv + ",");
+    R("\"ne\":" + ne + ",");
+    R("\"results\": {");
+
     val host = args(2)
     val sc = new SparkContext(host, "bageltest", System.getenv("SPARK_HOME"), Seq(System.getenv("SPARK_EXAMPLES_JAR")), sys.env)
+
+    startTime = System.nanoTime();
 
     /* holy syntactic sugar batman! - convert CSR into array of vertices with edge sequences*/
     //def toMap(start : Int, stop : Int) : HashMap[Int, Int] = { val 
@@ -111,19 +126,46 @@ object App {
       v : Int => (v, new mVertex(
 	v, v, v == 0, if(v == 0) 0 else Int.MaxValue, 0, 100, { val edges = new HashMap[Int, Int](); (off(v) until off(v+1)).map{e => edges.put(ind(e), wgt(e))}; edges}, true))})
 
-    val emptySVMsgs = sc.parallelize(List[(Int, SVMessage)]())
+    endTime = System.nanoTime();
 
+    var build_time = (((endTime - startTime).asInstanceOf[Double])/1e9);
+    R("\"build\": {");
+    R("\"name\":\"neo4j-std\",");
+    R("\"time\":" +  build_time);
+    R("},");
+
+    startTime = System.nanoTime();
+    val emptySVMsgs = sc.parallelize(List[(Int, SVMessage)]())
     val resultSV = Bagel.run(sc, verts, emptySVMsgs, parts)(shiloachVishkin)
     val resultSVWithCombiner = Bagel.run(sc, verts, emptySVMsgs, combiner = new SVCombiner(), numPartitions = parts)(shiloachVishkinWithCombiner)
+    endTime = System.nanoTime();
+    var sv_time = (((endTime - startTime).asInstanceOf[Double])/1e9);
+    R("\"sv\": {");
+    R("\"name\":\"neo4j-std\",");
+    R("\"time\":" +  sv_time);
+    R("},");
 
+    startTime = System.nanoTime();
     val emptySPMsgs = sc.parallelize(List[(Int, SPMessage)]())
-
     val resultSP = Bagel.run(sc, resultSV, emptySPMsgs, parts)(shortestPaths)
     val resultSPWithCombiner = Bagel.run(sc, resultSV, emptySPMsgs, combiner = new SPCombiner(), numPartitions = parts)(shortestPathsWithCombiner)
+    endTime = System.nanoTime();
+    var sssp_time = (((endTime - startTime).asInstanceOf[Double])/1e9);
+    R("\"sssp\": {");
+    R("\"name\":\"neo4j-std\",");
+    R("\"time\":" +  sssp_time);
+    R("},");
 
+    startTime = System.nanoTime();
     val emptyPRMsgs = sc.parallelize(List[(Int, PRMessage)]())
     val resultPR = Bagel.run(sc, resultSV, emptyPRMsgs, combiner = new DefaultCombiner[PRMessage](), aggregator = Option(new PRAggregator()), numPartitions = parts, partitioner = new HashPartitioner(parts), storageLevel = DEFAULT_STORAGE_LEVEL)(pageRank(1e-8, 0.85, 100, nv))
     val resultPRWithCombiner = Bagel.run(sc, resultSV, emptyPRMsgs, combiner = new PRCombiner(), aggregator = Option(new PRAggregator()), numPartitions = parts, partitioner = new HashPartitioner(parts), storageLevel = DEFAULT_STORAGE_LEVEL)(pageRankWithCombiner(1e-8, 0.85, 100, nv))
+    endTime = System.nanoTime();
+    var pr_time = (((endTime - startTime).asInstanceOf[Double])/1e9);
+    R("\"pr\": {");
+    R("\"name\":\"neo4j-std\",");
+    R("\"time\":" +  pr_time);
+    R("},");
 
     val actionIn = new FileInputStream(args(1))
 
@@ -146,7 +188,21 @@ object App {
 	edgeActions(2*a+1) = (babs(j), new EdgeMessage(babs(j),i));
     }}
 
+    startTime = System.nanoTime();
     val resultInsertRemove = Bagel.run(sc, verts, sc.parallelize(edgeActions), parts)(insertRemoveEdges)
+    endTime = System.nanoTime();
+    var eps = na.asInstanceOf[Double] / (((endTime - startTime).asInstanceOf[Double])/1e9);
+    R("\"update\": {");
+    R("\"name\":\"neo4j-std\",");
+    R("\"time\":" +  eps);
+    R("}");
+    R("},");
+    val mem = ManagementFactory.getMemoryMXBean();
+    val memory = (mem.getHeapMemoryUsage().getUsed() + mem.getNonHeapMemoryUsage().getUsed()) / 1024;
+
+    R("\"na\":" + na + ",");
+    R("\"mem\":" + memory);
+    R("}");
   }
 
   def shiloachVishkin(self : mVertex, msgs : Option[Array[SVMessage]], step : Int) : (mVertex, Array[SVMessage]) = {
