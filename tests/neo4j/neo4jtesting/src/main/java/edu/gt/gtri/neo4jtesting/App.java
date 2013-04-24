@@ -4,6 +4,7 @@ import java.io.*;
 import java.lang.Integer;
 import java.util.LinkedList;
 import java.util.HashMap;
+import java.lang.management.*;
 
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.tooling.GlobalGraphOperations;
@@ -24,6 +25,10 @@ public class App
 
   public static enum RelTypes implements RelationshipType {
     EDGE
+  }
+
+  public static void R(String result) {
+    System.out.println("RSLT: " + result);
   }
 
   public static void main( String[] args ) {
@@ -80,6 +85,12 @@ public class App
     }
     System.out.println("\tDone\n");
 
+      R("{");
+      R("\"type\":\"neo4j\",");
+      R("\"nv\":" + nv + ",");
+      R("\"ne\":" + ne + ",");
+      R("\"results\": {");
+
     System.out.println("Loading graph into DB...");
     {
       startTime = System.nanoTime();
@@ -108,6 +119,11 @@ public class App
 
       endTime = System.nanoTime();
     }
+    double build_time = (((double)(endTime - startTime))/1e9);
+    R("\"build\": {");
+    R("\"name\":\"neo4j-std\",");
+    R("\"time\":" +  build_time);
+    R("},");
     System.out.println("\tDone... " + (((double)(endTime - startTime))/1e9) + "\n");
 
     System.out.println("Shiloach-Vishkin...");
@@ -154,6 +170,11 @@ public class App
       }
       System.out.println("\tComponents... " + count);
     }
+    double sv_time = (((double)(endTime - startTime))/1e9);
+    R("\"sv\": {");
+    R("\"name\":\"neo4j-std\",");
+    R("\"time\":" +  sv_time);
+    R("},");
     System.out.println("\tDone... " + (((double)(endTime - startTime))/1e9) + "\n");
 
     System.out.println("BFS...");
@@ -193,6 +214,11 @@ public class App
       }
       System.out.println("\tDepth... " + depth);
     }
+    double sssp_time = (((double)(endTime - startTime))/1e9);
+    R("\"sssp\": {");
+    R("\"name\":\"neo4j-std\",");
+    R("\"time\":" +  sssp_time);
+    R("},");
     System.out.println("\tDone... " + (((double)(endTime - startTime))/1e9) + "\n");
 
     System.out.println("Page Rank...");
@@ -245,6 +271,11 @@ public class App
 
       System.out.println("\tIterations... " + (maxiter - iter));
     }
+    double pr_time = (((double)(endTime - startTime))/1e9);
+    R("\"pr\": {");
+    R("\"name\":\"neo4j-std\",");
+    R("\"time\":" +  pr_time);
+    R("},");
     System.out.println("\tDone... " + (((double)(endTime - startTime))/1e9) + "\n");
 
     System.out.printf("Reading actions from disk... %s\n", args[1]);
@@ -334,6 +365,18 @@ public class App
 
       endTime = System.nanoTime();
     }
+    double eps = na/(((double)(endTime - startTime))/1e9);
+    R("\"update\": {");
+    R("\"name\":\"neo4j-std\",");
+    R("\"time\":" +  eps);
+    R("}");
+    R("},");
+    MemoryMXBean mem = ManagementFactory.getMemoryMXBean();
+    long memory = (mem.getHeapMemoryUsage().getUsed() + mem.getNonHeapMemoryUsage().getUsed()) / 1024;
+
+    R("\"na\":" + na + ",");
+    R("\"mem\":" + memory);
+    R("}");
     System.out.println("\tDone... " + (((double)(endTime - startTime))/1e9) + "\n");
   }
 
