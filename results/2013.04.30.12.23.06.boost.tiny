@@ -10,23 +10,23 @@
     "nv": 1024, 
     "results": {
         "build": {
-            "name": "sqlite-std", 
+            "name": "boost-std", 
             "time": 0.005886793
         }, 
         "pr": {
-            "name": "sqlite-std", 
+            "name": "boost-std", 
             "time": 0.01153231
         }, 
         "sssp": {
-            "name": "sqlite-std", 
+            "name": "boost-std", 
             "time": 0.0003459454
         }, 
         "sv": {
-            "name": "sqlite-std", 
+            "name": "boost-std", 
             "time": 0.0007913113
         }, 
         "update": {
-            "name": "sqlite-std", 
+            "name": "boost-std", 
             "time": 2101755.0
         }
     }, 
