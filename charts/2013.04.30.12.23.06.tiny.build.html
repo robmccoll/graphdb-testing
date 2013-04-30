@@ -17,13 +17,13 @@
 				  text: 'Initial Graph Construction'
 			      },
 			      xAxis: {
-				  categories: ["boost-std", "dex-std", "mtgl-std", "neo4j-std", "networkx-std", "orientdb-std", "sqlite-std", "stinger-std", "titan-std"],
+				  categories: ["boost-std", "mtgl-std", "stinger-std", "networkx-std", "dex-std", "sqlite-std", "titan-std", "neo4j-std", "orientdb-std"],
 				  title: {
 				      text: 'Graph Package'
 				  }
 			      },
 			      yAxis: {
-				  min: 0,
+				  type: 'logarithmic',
 				  title: {
 				      text: 'Time (s)'
 				  }
@@ -32,7 +32,10 @@
 				enabled: false
 			      },
 			      series: [{
-				data: [0.005886793, 0.2200472, 0.007949352, 1.968544806, 0.05420207977294922, 4.396140781, 0.6192615, 0.03323967, 1.425223481]
+				data: [{"y": 0.005886793, "color": "blue"}, {"y": 0.007949352, "color": "blue"}, {"y": 0.03323967, "color": "red"}, {"y": 0.05420207977294922, "color": "blue"}, {"y": 0.2200472, "color": "blue"}, {"y": 0.6192615, "color": "blue"}, {"y": 1.425223481, "color": "blue"}, {"y": 1.968544806, "color": "blue"}, {"y": 4.396140781, "color": "blue"}],
+				dataLabels: {
+				  enabled: true,
+				},
 			      }]
 			  });
 		      });

@@ -53,8 +53,8 @@ charts = [
 ]
 
 def produce_bar_chart(chart, results, output):
-  data = [chart["data"](r) for r in results]
-  labels = [chart["label"](r) for r in results]
+  data, labels = zip(*sorted(zip([chart["data"](r) for r in results], [chart["label"](r) for r in results])))
+  data = [{'y': d, 'color': c} for d,c in zip(data,["red" if -1 != l.find("stinger") else "blue" for l in labels])]
   output.write("""
 <!DOCTYPE HTML>
 <html>
@@ -80,7 +80,7 @@ def produce_bar_chart(chart, results, output):
 				  }
 			      },
 			      yAxis: {
-				  min: 0,
+				  type: 'logarithmic',
 				  title: {
 				      text: '%s'
 				  }
@@ -89,7 +89,10 @@ def produce_bar_chart(chart, results, output):
 				enabled: false
 			      },
 			      series: [{
-				data: %s
+				data: %s,
+				dataLabels: {
+				  enabled: true,
+				},
 			      }]
 			  });
 		      });
@@ -104,7 +107,7 @@ def produce_bar_chart(chart, results, output):
 	</body>
 </html>
   
-  """ % (chart['title'], chart['title'], json.dumps(labels), chart['x-axis'], chart['y-axis'], data))
+  """ % (chart['title'], chart['title'], json.dumps(labels), chart['x-axis'], chart['y-axis'], json.dumps(data)))
 
 def parse_file(filename):
     fp = open(filename, 'r')

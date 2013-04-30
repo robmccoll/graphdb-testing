@@ -17,13 +17,13 @@
 				  text: 'Memory Usage'
 			      },
 			      xAxis: {
-				  categories: ["boost", "dex", "mtgl", "neo4j", "networkx", "orientdb", "sqlite", "stinger", "titan"],
+				  categories: ["dex", "sqlite", "stinger", "mtgl", "boost", "networkx", "titan", "orientdb", "neo4j"],
 				  title: {
 				      text: 'Graph Package'
 				  }
 			      },
 			      yAxis: {
-				  min: 0,
+				  type: 'logarithmic',
 				  title: {
 				      text: 'Memory Usage (KB)'
 				  }
@@ -32,7 +32,10 @@
 				enabled: false
 			      },
 			      series: [{
-				data: [17124, 8376, 15608, 2461448, 44576, 1824404, 9504, 15308, 89968]
+				data: [{"y": 8376, "color": "blue"}, {"y": 9504, "color": "blue"}, {"y": 15308, "color": "red"}, {"y": 15608, "color": "blue"}, {"y": 17124, "color": "blue"}, {"y": 44576, "color": "blue"}, {"y": 89968, "color": "blue"}, {"y": 1824404, "color": "blue"}, {"y": 2461448, "color": "blue"}],
+				dataLabels: {
+				  enabled: true,
+				},
 			      }]
 			  });
 		      });

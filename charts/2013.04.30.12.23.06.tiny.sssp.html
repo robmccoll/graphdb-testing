@@ -17,13 +17,13 @@
 				  text: 'Single Source Shortest Path'
 			      },
 			      xAxis: {
-				  categories: ["boost-std", "dex-std", "mtgl-std", "neo4j-std", "networkx-std", "orientdb-std", "sqlite-std", "stinger-std", "titan-std"],
+				  categories: ["stinger-std", "boost-std", "mtgl-std", "networkx-std", "dex-std", "neo4j-std", "titan-std", "orientdb-std", "sqlite-std"],
 				  title: {
 				      text: 'Graph Package'
 				  }
 			      },
 			      yAxis: {
-				  min: 0,
+				  type: 'logarithmic',
 				  title: {
 				      text: 'Time (s)'
 				  }
@@ -32,7 +32,10 @@
 				enabled: false
 			      },
 			      series: [{
-				data: [0.0003459454, 0.05037045, 0.001268625, 0.079377043, 0.002930879592895508, 0.147187186, 0.1951342, 3.380328e-05, 0.118677557]
+				data: [{"y": 3.380328e-05, "color": "red"}, {"y": 0.0003459454, "color": "blue"}, {"y": 0.001268625, "color": "blue"}, {"y": 0.002930879592895508, "color": "blue"}, {"y": 0.05037045, "color": "blue"}, {"y": 0.079377043, "color": "blue"}, {"y": 0.118677557, "color": "blue"}, {"y": 0.147187186, "color": "blue"}, {"y": 0.1951342, "color": "blue"}],
+				dataLabels: {
+				  enabled: true,
+				},
 			      }]
 			  });
 		      });

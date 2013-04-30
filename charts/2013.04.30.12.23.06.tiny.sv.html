@@ -17,13 +17,13 @@
 				  text: 'Connected Components'
 			      },
 			      xAxis: {
-				  categories: ["boost-std", "dex-std", "mtgl-std", "neo4j-std", "networkx-std", "orientdb-std", "sqlite-std", "stinger-std", "titan-std"],
+				  categories: ["stinger-std", "boost-std", "networkx-std", "mtgl-std", "dex-std", "orientdb-std", "titan-std", "neo4j-std", "sqlite-std"],
 				  title: {
 				      text: 'Graph Package'
 				  }
 			      },
 			      yAxis: {
-				  min: 0,
+				  type: 'logarithmic',
 				  title: {
 				      text: 'Time (s)'
 				  }
@@ -32,7 +32,10 @@
 				enabled: false
 			      },
 			      series: [{
-				data: [0.0007913113, 0.1047065, 0.04248524, 2.04283837, 0.003307819366455078, 0.43909684, 163.9613, 0.0006494643, 0.563982798]
+				data: [{"y": 0.0006494643, "color": "red"}, {"y": 0.0007913113, "color": "blue"}, {"y": 0.003307819366455078, "color": "blue"}, {"y": 0.04248524, "color": "blue"}, {"y": 0.1047065, "color": "blue"}, {"y": 0.43909684, "color": "blue"}, {"y": 0.563982798, "color": "blue"}, {"y": 2.04283837, "color": "blue"}, {"y": 163.9613, "color": "blue"}],
+				dataLabels: {
+				  enabled: true,
+				},
 			      }]
 			  });
 		      });

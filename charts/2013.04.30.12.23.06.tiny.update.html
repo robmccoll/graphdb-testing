@@ -17,13 +17,13 @@
 				  text: 'Update Rate'
 			      },
 			      xAxis: {
-				  categories: ["boost-std", "dex-std", "mtgl-insertonly", "neo4j-std", "networkx-std", "orientdb-std", "sqlite-std", "stinger-std", "titan-std"],
+				  categories: ["networkx-std", "orientdb-std", "titan-std", "neo4j-std", "sqlite-std", "dex-std", "boost-std", "stinger-std", "mtgl-insertonly"],
 				  title: {
 				      text: 'Graph Package'
 				  }
 			      },
 			      yAxis: {
-				  min: 0,
+				  type: 'logarithmic',
 				  title: {
 				      text: 'Edges per Second'
 				  }
@@ -32,7 +32,10 @@
 				enabled: false
 			      },
 			      series: [{
-				data: [2101755.0, 29570.32, 3085862.0, 2299.9622243900435, 0.36565518379211426, 1761.1453080843814, 12553.54, 2455779.0, 2217.7437683641415]
+				data: [{"y": 0.36565518379211426, "color": "blue"}, {"y": 1761.1453080843814, "color": "blue"}, {"y": 2217.7437683641415, "color": "blue"}, {"y": 2299.9622243900435, "color": "blue"}, {"y": 12553.54, "color": "blue"}, {"y": 29570.32, "color": "blue"}, {"y": 2101755.0, "color": "blue"}, {"y": 2455779.0, "color": "red"}, {"y": 3085862.0, "color": "blue"}],
+				dataLabels: {
+				  enabled: true,
+				},
 			      }]
 			  });
 		      });
