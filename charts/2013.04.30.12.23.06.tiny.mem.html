@@ -3,7 +3,7 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-		<title>Update Rate</title>
+		<title>Memory Usage</title>
 
 		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
 		<script type="text/javascript">
@@ -13,10 +13,10 @@
 				  type: 'column'
 			      },
 			      title: {
-				  text: 'Update Rate'
+				  text: 'Memory Usage'
 			      },
 			      xAxis: {
-				  categories: [u'boost', u'dex', u'mtgl', u'neo4j', u'networkx', u'orientdb', u'mysql', u'stinger', u'titan']
+				  categories: ["boost", "dex", "mtgl", "neo4j", "networkx", "orientdb", "mysql", "stinger", "titan"],
 				  title: {
 				      text: 'Graph Package'
 				  }
@@ -24,12 +24,15 @@
 			      yAxis: {
 				  min: 0,
 				  title: {
-				      text: 'Edges per Second'
+				      text: 'Memory Usage (KB)'
 				  }
 			      },
-			      series: [
+			      legend: {
+				enabled: false
+			      },
+			      series: [{
 				data: [17124, 8376, 15608, 2461448, 44576, 1824404, 9504, 15308, 89968]
-			      ]
+			      }]
 			  });
 		      });
 		</script>

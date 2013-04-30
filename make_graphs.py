@@ -44,10 +44,10 @@ charts = [
   },
   {
     "name":"mem",
-    "title":"Update Rate",
+    "title":"Memory Usage",
     "data": (lambda x: x["mem"]),
     "label": (lambda x: x["type"]),
-    "y-axis":"Edges per Second",
+    "y-axis":"Memory Usage (KB)",
     "x-axis":"Graph Package",
   },
 ]
@@ -73,7 +73,7 @@ def produce_bar_chart(chart, results, output):
 				  text: '%s'
 			      },
 			      xAxis: {
-				  categories: %s
+				  categories: %s,
 				  title: {
 				      text: '%s'
 				  }
@@ -84,9 +84,12 @@ def produce_bar_chart(chart, results, output):
 				      text: '%s'
 				  }
 			      },
-			      series: [
+			      legend: {
+				enabled: false
+			      },
+			      series: [{
 				data: %s
-			      ]
+			      }]
 			  });
 		      });
 		</script>
@@ -100,7 +103,7 @@ def produce_bar_chart(chart, results, output):
 	</body>
 </html>
   
-  """ % (chart['title'], chart['title'], labels, chart['x-axis'], chart['y-axis'], data))
+  """ % (chart['title'], chart['title'], json.dumps(labels), chart['x-axis'], chart['y-axis'], data))
 
 def parse_file(filename):
     fp = open(filename, 'r')

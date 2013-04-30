@@ -16,7 +16,7 @@
 				  text: 'Single Source Shortest Path'
 			      },
 			      xAxis: {
-				  categories: [u'sqlite-std', u'dex-std', u'mtgl-std', u'neo4j-std', u'networkx-std', u'orientdb-std', u'sqlite-std', u'stinger-std', u'titan-std']
+				  categories: ["sqlite-std", "dex-std", "mtgl-std", "neo4j-std", "networkx-std", "orientdb-std", "sqlite-std", "stinger-std", "titan-std"],
 				  title: {
 				      text: 'Graph Package'
 				  }
@@ -27,9 +27,12 @@
 				      text: 'Time (s)'
 				  }
 			      },
-			      series: [
+			      legend: {
+				enabled: false
+			      },
+			      series: [{
 				data: [0.0003459454, 0.05037045, 0.001268625, 0.079377043, 0.002930879592895508, 0.147187186, 0.1951342, 3.380328e-05, 0.118677557]
-			      ]
+			      }]
 			  });
 		      });
 		</script>

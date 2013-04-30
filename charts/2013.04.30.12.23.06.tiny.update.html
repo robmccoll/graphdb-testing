@@ -16,7 +16,7 @@
 				  text: 'Update Rate'
 			      },
 			      xAxis: {
-				  categories: [u'sqlite-std', u'dex-std', u'mtgl-insertonly', u'neo4j-std', u'networkx-std', u'orientdb-std', u'sqlite-std', u'stinger-std', u'titan-std']
+				  categories: ["sqlite-std", "dex-std", "mtgl-insertonly", "neo4j-std", "networkx-std", "orientdb-std", "sqlite-std", "stinger-std", "titan-std"],
 				  title: {
 				      text: 'Graph Package'
 				  }
@@ -27,9 +27,12 @@
 				      text: 'Edges per Second'
 				  }
 			      },
-			      series: [
+			      legend: {
+				enabled: false
+			      },
+			      series: [{
 				data: [2101755.0, 29570.32, 3085862.0, 2299.9622243900435, 0.36565518379211426, 1761.1453080843814, 12553.54, 2455779.0, 2217.7437683641415]
-			      ]
+			      }]
 			  });
 		      });
 		</script>
