@@ -1,0 +1,34 @@
+"sysconfig" : {
+  "cpu" : "AMD Opteron(tm) Processor 6282 SE              ",
+  "sockets": "4",
+  "mem" : "264154496 kB"
+}
+{
+    "mem": 44868, 
+    "na": 100000, 
+    "ne": 504364, 
+    "nv": 32768, 
+    "results": {
+        "build": {
+            "name": "dex-std", 
+            "time": 7.643547
+        }, 
+        "pr": {
+            "name": "dex-std", 
+            "time": 79.96581
+        }, 
+        "sssp": {
+            "name": "dex-std", 
+            "time": 2.157558
+        }, 
+        "sv": {
+            "name": "dex-std", 
+            "time": 7.762666
+        }, 
+        "update": {
+            "name": "dex-std", 
+            "time": 26503.34
+        }
+    }, 
+    "type": "dex"
+}

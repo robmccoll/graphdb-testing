@@ -1,0 +1,34 @@
+"sysconfig" : {
+  "cpu" : "AMD Opteron(tm) Processor 6282 SE              ",
+  "sockets": "4",
+  "mem" : "264154496 kB"
+}
+{
+    "mem": 44576, 
+    "na": 100000, 
+    "ne": 14408, 
+    "nv": 1024, 
+    "results": {
+        "build": {
+            "name": "networkx-std", 
+            "time": 0.05420207977294922
+        }, 
+        "pr": {
+            "name": "networkx-std", 
+            "time": 1.0233941078186035
+        }, 
+        "sssp": {
+            "name": "networkx-std", 
+            "time": 0.002930879592895508
+        }, 
+        "sv": {
+            "name": "networkx-std", 
+            "time": 0.003307819366455078
+        }, 
+        "update": {
+            "name": "networkx-std", 
+            "time": 0.36565518379211426
+        }
+    }, 
+    "type": "networkx"
+}

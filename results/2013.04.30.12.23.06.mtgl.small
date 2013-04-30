@@ -1,0 +1,34 @@
+"sysconfig" : {
+  "cpu" : "AMD Opteron(tm) Processor 6282 SE              ",
+  "sockets": "4",
+  "mem" : "264154496 kB"
+}
+{
+    "mem": 63436, 
+    "na": 100000, 
+    "ne": 504364, 
+    "nv": 32768, 
+    "results": {
+        "build": {
+            "name": "mtgl-std", 
+            "time": 0.1735096
+        }, 
+        "pr": {
+            "name": "mtgl-std", 
+            "time": 13.95524
+        }, 
+        "sssp": {
+            "name": "mtgl-std", 
+            "time": 0.1010599
+        }, 
+        "sv": {
+            "name": "mtgl-std", 
+            "time": 0.05071163
+        }, 
+        "update": {
+            "name": "mtgl-insertonly", 
+            "time": 1561304.0
+        }
+    }, 
+    "type": "mtgl"
+}

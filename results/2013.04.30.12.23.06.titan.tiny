@@ -1,0 +1,34 @@
+"sysconfig" : {
+  "cpu" : "AMD Opteron(tm) Processor 6282 SE              ",
+  "sockets": "4",
+  "mem" : "264154496 kB"
+}
+{
+    "mem": 89968, 
+    "na": 100000, 
+    "ne": 14408, 
+    "nv": 1024, 
+    "results": {
+        "build": {
+            "name": "titan-std", 
+            "time": 1.425223481
+        }, 
+        "pr": {
+            "name": "titan-std", 
+            "time": 7.189860544
+        }, 
+        "sssp": {
+            "name": "titan-std", 
+            "time": 0.118677557
+        }, 
+        "sv": {
+            "name": "titan-std", 
+            "time": 0.563982798
+        }, 
+        "update": {
+            "name": "titan-std", 
+            "time": 2217.7437683641415
+        }
+    }, 
+    "type": "titan"
+}

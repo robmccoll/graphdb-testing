@@ -1,0 +1,34 @@
+"sysconfig" : {
+  "cpu" : "AMD Opteron(tm) Processor 6282 SE              ",
+  "sockets": "4",
+  "mem" : "264154496 kB"
+}
+{
+    "mem": 67228, 
+    "na": 100000, 
+    "ne": 504364, 
+    "nv": 32768, 
+    "results": {
+        "build": {
+            "name": "sqlite-std", 
+            "time": 0.1144311
+        }, 
+        "pr": {
+            "name": "sqlite-std", 
+            "time": 0.7406242
+        }, 
+        "sssp": {
+            "name": "sqlite-std", 
+            "time": 0.01088023
+        }, 
+        "sv": {
+            "name": "sqlite-std", 
+            "time": 0.06861806
+        }, 
+        "update": {
+            "name": "sqlite-std", 
+            "time": 1938711.0
+        }
+    }, 
+    "type": "boost"
+}

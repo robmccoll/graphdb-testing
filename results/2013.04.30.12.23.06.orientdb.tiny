@@ -1,0 +1,34 @@
+"sysconfig" : {
+  "cpu" : "AMD Opteron(tm) Processor 6282 SE              ",
+  "sockets": "4",
+  "mem" : "264154496 kB"
+}
+{
+    "mem": 1824404, 
+    "na": 100000, 
+    "ne": 14408, 
+    "nv": 1024, 
+    "results": {
+        "build": {
+            "name": "orientdb-std", 
+            "time": 4.396140781
+        }, 
+        "pr": {
+            "name": "orientdb-std", 
+            "time": 1.044315362
+        }, 
+        "sssp": {
+            "name": "orientdb-std", 
+            "time": 0.147187186
+        }, 
+        "sv": {
+            "name": "orientdb-std", 
+            "time": 0.43909684
+        }, 
+        "update": {
+            "name": "orientdb-std", 
+            "time": 1761.1453080843814
+        }
+    }, 
+    "type": "orientdb"
+}

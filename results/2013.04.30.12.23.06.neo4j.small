@@ -1,0 +1,34 @@
+"sysconfig" : {
+  "cpu" : "AMD Opteron(tm) Processor 6282 SE              ",
+  "sockets": "4",
+  "mem" : "264154496 kB"
+}
+{
+    "mem": 1117045, 
+    "na": 100000, 
+    "ne": 504364, 
+    "nv": 32768, 
+    "results": {
+        "build": {
+            "name": "neo4j-std", 
+            "time": 11.853016039
+        }, 
+        "pr": {
+            "name": "neo4j-std", 
+            "time": 1819.30387686
+        }, 
+        "sssp": {
+            "name": "neo4j-std", 
+            "time": 0.963882457
+        }, 
+        "sv": {
+            "name": "neo4j-std", 
+            "time": 5.753504099
+        }, 
+        "update": {
+            "name": "neo4j-std", 
+            "time": 4216.3727385838565
+        }
+    }, 
+    "type": "neo4j"
+}
