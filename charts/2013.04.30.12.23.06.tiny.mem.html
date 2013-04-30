@@ -10,13 +10,14 @@
 		    $(function () {
 			  $('#container').highcharts({
 			      chart: {
-				  type: 'column'
+				  type: 'column',
+				  zoomType: 'xy'
 			      },
 			      title: {
 				  text: 'Memory Usage'
 			      },
 			      xAxis: {
-				  categories: ["boost", "dex", "mtgl", "neo4j", "networkx", "orientdb", "mysql", "stinger", "titan"],
+				  categories: ["boost", "dex", "mtgl", "neo4j", "networkx", "orientdb", "sqlite", "stinger", "titan"],
 				  title: {
 				      text: 'Graph Package'
 				  }

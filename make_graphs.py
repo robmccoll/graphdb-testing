@@ -67,7 +67,8 @@ def produce_bar_chart(chart, results, output):
 		    $(function () {
 			  $('#container').highcharts({
 			      chart: {
-				  type: 'column'
+				  type: 'column',
+				  zoomType: 'xy'
 			      },
 			      title: {
 				  text: '%s'
