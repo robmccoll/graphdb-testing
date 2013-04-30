@@ -1,0 +1,46 @@
+
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>Page Rank</title>
+
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+		<script type="text/javascript">
+		    $(function () {
+			  $('#container').highcharts({
+			      chart: {
+				  type: 'column'
+			      },
+			      title: {
+				  text: 'Page Rank'
+			      },
+			      xAxis: {
+				  categories: [u'sqlite-std', u'dex-std', u'mtgl-std', u'neo4j-std', u'networkx-std', u'orientdb-std', u'sqlite-std', u'stinger-std', u'titan-std']
+				  title: {
+				      text: 'Graph Package'
+				  }
+			      },
+			      yAxis: {
+				  min: 0,
+				  title: {
+				      text: 'Time (s)'
+				  }
+			      },
+			      series: [
+				data: [0.01153231, 1.72835, 0.1181941, 1272.53795793, 1.0233941078186035, 1.044315362, 5.317521, 0.006899429, 7.189860544]
+			      ]
+			  });
+		      });
+		</script>
+	</head>
+	<body>
+<script src="js/highcharts.js"></script>
+<script src="js/modules/exporting.js"></script>
+
+<div id="container" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
+
+	</body>
+</html>
+  
+  

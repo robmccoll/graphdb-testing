@@ -1,0 +1,46 @@
+
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>Initial Graph Construction</title>
+
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+		<script type="text/javascript">
+		    $(function () {
+			  $('#container').highcharts({
+			      chart: {
+				  type: 'column'
+			      },
+			      title: {
+				  text: 'Initial Graph Construction'
+			      },
+			      xAxis: {
+				  categories: [u'sqlite-std', u'dex-std', u'mtgl-std', u'neo4j-std', u'networkx-std', u'orientdb-std', u'sqlite-std', u'stinger-std', u'titan-std']
+				  title: {
+				      text: 'Graph Package'
+				  }
+			      },
+			      yAxis: {
+				  min: 0,
+				  title: {
+				      text: 'Time (s)'
+				  }
+			      },
+			      series: [
+				data: [0.005886793, 0.2200472, 0.007949352, 1.968544806, 0.05420207977294922, 4.396140781, 0.6192615, 0.03323967, 1.425223481]
+			      ]
+			  });
+		      });
+		</script>
+	</head>
+	<body>
+<script src="js/highcharts.js"></script>
+<script src="js/modules/exporting.js"></script>
+
+<div id="container" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
+
+	</body>
+</html>
+  
+  

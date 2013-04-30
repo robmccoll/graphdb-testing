@@ -1,0 +1,46 @@
+
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>Update Rate</title>
+
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+		<script type="text/javascript">
+		    $(function () {
+			  $('#container').highcharts({
+			      chart: {
+				  type: 'column'
+			      },
+			      title: {
+				  text: 'Update Rate'
+			      },
+			      xAxis: {
+				  categories: [u'sqlite-std', u'dex-std', u'mtgl-insertonly', u'neo4j-std', u'networkx-std', u'orientdb-std', u'sqlite-std', u'stinger-std', u'titan-std']
+				  title: {
+				      text: 'Graph Package'
+				  }
+			      },
+			      yAxis: {
+				  min: 0,
+				  title: {
+				      text: 'Edges per Second'
+				  }
+			      },
+			      series: [
+				data: [2101755.0, 29570.32, 3085862.0, 2299.9622243900435, 0.36565518379211426, 1761.1453080843814, 12553.54, 2455779.0, 2217.7437683641415]
+			      ]
+			  });
+		      });
+		</script>
+	</head>
+	<body>
+<script src="js/highcharts.js"></script>
+<script src="js/modules/exporting.js"></script>
+
+<div id="container" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
+
+	</body>
+</html>
+  
+  

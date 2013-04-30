@@ -1,0 +1,46 @@
+
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>Single Source Shortest Path</title>
+
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+		<script type="text/javascript">
+		    $(function () {
+			  $('#container').highcharts({
+			      chart: {
+				  type: 'column'
+			      },
+			      title: {
+				  text: 'Single Source Shortest Path'
+			      },
+			      xAxis: {
+				  categories: [u'sqlite-std', u'dex-std', u'mtgl-std', u'neo4j-std', u'networkx-std', u'orientdb-std', u'sqlite-std', u'stinger-std', u'titan-std']
+				  title: {
+				      text: 'Graph Package'
+				  }
+			      },
+			      yAxis: {
+				  min: 0,
+				  title: {
+				      text: 'Time (s)'
+				  }
+			      },
+			      series: [
+				data: [0.0003459454, 0.05037045, 0.001268625, 0.079377043, 0.002930879592895508, 0.147187186, 0.1951342, 3.380328e-05, 0.118677557]
+			      ]
+			  });
+		      });
+		</script>
+	</head>
+	<body>
+<script src="js/highcharts.js"></script>
+<script src="js/modules/exporting.js"></script>
+
+<div id="container" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
+
+	</body>
+</html>
+  
+  
