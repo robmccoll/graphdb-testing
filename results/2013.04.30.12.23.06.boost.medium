@@ -1,0 +1,34 @@
+"sysconfig" : {
+  "cpu" : "AMD Opteron(tm) Processor 6282 SE              ",
+  "sockets": "4",
+  "mem" : "264154496 kB"
+}
+{
+    "mem": 1865836, 
+    "na": 1000000, 
+    "ne": 16571375, 
+    "nv": 1048576, 
+    "results": {
+        "build": {
+            "name": "boost-std", 
+            "time": 6.476786
+        }, 
+        "pr": {
+            "name": "boost-std", 
+            "time": 45.84052
+        }, 
+        "sssp": {
+            "name": "boost-std", 
+            "time": 0.4562194
+        }, 
+        "sv": {
+            "name": "boost-std", 
+            "time": 3.111452
+        }, 
+        "update": {
+            "name": "boost-std", 
+            "time": 696352.8
+        }
+    }, 
+    "type": "boost"
+}

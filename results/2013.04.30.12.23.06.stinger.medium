@@ -1,0 +1,34 @@
+"sysconfig" : {
+  "cpu" : "AMD Opteron(tm) Processor 6282 SE              ",
+  "sockets": "4",
+  "mem" : "264154496 kB"
+}
+{
+    "mem": 1661296, 
+    "na": 1000000, 
+    "ne": 16571375, 
+    "nv": 1048576, 
+    "results": {
+        "build": {
+            "name": "stinger-std", 
+            "time": 0.2144375
+        }, 
+        "pr": {
+            "name": "stinger-std", 
+            "time": 6.76433
+        }, 
+        "sssp": {
+            "name": "stinger-std", 
+            "time": 0.3035836
+        }, 
+        "sv": {
+            "name": "stinger-std", 
+            "time": 0.4172424
+        }, 
+        "update": {
+            "name": "stinger-std", 
+            "time": 3668374.0
+        }
+    }, 
+    "type": "stinger"
+}
