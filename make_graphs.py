@@ -54,7 +54,7 @@ charts = [
 
 def produce_bar_chart(chart, results, output):
   data, labels = zip(*sorted(zip([chart["data"](r) for r in results], [chart["label"](r) for r in results])))
-  data = [{'y': d, 'color': c} for d,c in zip(data,["red" if -1 != l.find("stinger") else "blue" for l in labels])]
+  data = [{'y': d, 'color': c} for d,c in zip(data,["gold" if -1 != l.find("stinger") else "navy" for l in labels])]
   output.write("""
 <!DOCTYPE HTML>
 <html>
@@ -133,9 +133,12 @@ if __name__ == "__main__":
   prefix = sys.argv[1]
 
   for a in sys.argv[2:]:
-    result, sysconfig = parse_file(a)
-    results.append(result)
-    sysconfigs.append(sysconfig)
+    try:
+      result, sysconfig = parse_file(a)
+      results.append(result)
+      sysconfigs.append(sysconfig)
+    except ValueError:
+      pass
 
   for chart in charts:
     fp = open("charts/" + prefix + "." + chart["name"] + ".html", "w")

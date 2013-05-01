@@ -3,7 +3,7 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-		<title>Memory Usage</title>
+		<title>Update Rate</title>
 
 		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
 		<script type="text/javascript">
@@ -14,10 +14,10 @@
 				  zoomType: 'xy'
 			      },
 			      title: {
-				  text: 'Memory Usage'
+				  text: 'Update Rate'
 			      },
 			      xAxis: {
-				  categories: ["dex", "sqlite", "stinger", "mtgl", "boost", "networkx", "titan", "orientdb", "neo4j"],
+				  categories: ["networkx-std", "titan-std", "orientdb-std", "neo4j-std", "sqlite-std", "dex-std", "mtgl-insertonly", "boost-std", "stinger-std"],
 				  title: {
 				      text: 'Graph Package'
 				  }
@@ -25,14 +25,14 @@
 			      yAxis: {
 				  type: 'logarithmic',
 				  title: {
-				      text: 'Memory Usage (KB)'
+				      text: 'Edges per Second'
 				  }
 			      },
 			      legend: {
 				enabled: false
 			      },
 			      series: [{
-				data: [{"y": 8376, "color": "navy"}, {"y": 9504, "color": "navy"}, {"y": 15308, "color": "gold"}, {"y": 15608, "color": "navy"}, {"y": 17124, "color": "navy"}, {"y": 44576, "color": "navy"}, {"y": 89968, "color": "navy"}, {"y": 1824404, "color": "navy"}, {"y": 2461448, "color": "navy"}],
+				data: [{"y": 0.4178609848022461, "color": "navy"}, {"y": 2519.6500325032334, "color": "navy"}, {"y": 2791.091520799467, "color": "navy"}, {"y": 4216.3727385838565, "color": "navy"}, {"y": 12553.54, "color": "navy"}, {"y": 26503.34, "color": "navy"}, {"y": 1561304.0, "color": "navy"}, {"y": 1938711.0, "color": "navy"}, {"y": 4007717.0, "color": "gold"}],
 				dataLabels: {
 				  enabled: true,
 				},

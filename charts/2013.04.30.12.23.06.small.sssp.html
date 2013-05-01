@@ -3,7 +3,7 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-		<title>Memory Usage</title>
+		<title>Single Source Shortest Path</title>
 
 		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
 		<script type="text/javascript">
@@ -14,10 +14,10 @@
 				  zoomType: 'xy'
 			      },
 			      title: {
-				  text: 'Memory Usage'
+				  text: 'Single Source Shortest Path'
 			      },
 			      xAxis: {
-				  categories: ["dex", "sqlite", "stinger", "mtgl", "boost", "networkx", "titan", "orientdb", "neo4j"],
+				  categories: ["boost-std", "stinger-std", "mtgl-std", "networkx-std", "sqlite-std", "titan-std", "neo4j-std", "dex-std", "orientdb-std"],
 				  title: {
 				      text: 'Graph Package'
 				  }
@@ -25,14 +25,14 @@
 			      yAxis: {
 				  type: 'logarithmic',
 				  title: {
-				      text: 'Memory Usage (KB)'
+				      text: 'Time (s)'
 				  }
 			      },
 			      legend: {
 				enabled: false
 			      },
 			      series: [{
-				data: [{"y": 8376, "color": "navy"}, {"y": 9504, "color": "navy"}, {"y": 15308, "color": "gold"}, {"y": 15608, "color": "navy"}, {"y": 17124, "color": "navy"}, {"y": 44576, "color": "navy"}, {"y": 89968, "color": "navy"}, {"y": 1824404, "color": "navy"}, {"y": 2461448, "color": "navy"}],
+				data: [{"y": 0.01088023, "color": "navy"}, {"y": 0.01695472, "color": "gold"}, {"y": 0.1010599, "color": "navy"}, {"y": 0.17392420768737793, "color": "navy"}, {"y": 0.1951342, "color": "navy"}, {"y": 0.71539293, "color": "navy"}, {"y": 0.963882457, "color": "navy"}, {"y": 2.157558, "color": "navy"}, {"y": 2.475516916, "color": "navy"}],
 				dataLabels: {
 				  enabled: true,
 				},
