@@ -3,3 +3,26 @@
   "sockets": "4",
   "mem" : "264154496 kB"
 }
+{
+ "type":"neo4j",
+ "nv":1048576,
+ "ne":16571375,
+ "results": {
+ "build": {
+ "name":"neo4j-std",
+ "time":777.977419659
+ },
+ "sv": {
+ "name":"neo4j-std",
+ "time":109.602418466
+ },
+ "sssp": {
+ "name":"neo4j-std",
+ "time":22.281320012
+ },
+ "pr": {
+ "name":"neo4j-std",
+ "time":8060.984880774
+ }
+ "mem":"64000000,
+}

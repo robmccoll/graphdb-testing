@@ -3,3 +3,32 @@
   "sockets": "4",
   "mem" : "264154496 kB"
 }
+{
+    "mem": 8254822, 
+    "na": 1000000, 
+    "ne": 16571375, 
+    "nv": 1048576, 
+    "results": {
+        "build": {
+            "name": "titan-std", 
+            "time": 188.169595122
+        }, 
+        "pr": {
+            "name": "titan-std", 
+            "time": 63913.066011019
+        }, 
+        "sssp": {
+            "name": "titan-std", 
+            "time": 16.564703206
+        }, 
+        "sv": {
+            "name": "titan-std", 
+            "time": 292.034813606
+        }, 
+        "update": {
+            "name": "titan-std", 
+            "time": 1330.4010829244394
+        }
+    }, 
+    "type": "titan"
+}
