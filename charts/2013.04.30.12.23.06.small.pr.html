@@ -3,7 +3,7 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-		<title>Memory Usage</title>
+		<title>Page Rank</title>
 
 		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
 		<script type="text/javascript">
@@ -14,10 +14,10 @@
 				  zoomType: 'xy'
 			      },
 			      title: {
-				  text: 'Memory Usage'
+				  text: 'Page Rank'
 			      },
 			      xAxis: {
-				  categories: ["dex", "sqlite", "stinger", "mtgl", "boost", "networkx", "titan", "orientdb", "neo4j"],
+				  categories: ["stinger-std", "boost-std", "sqlite-std", "mtgl-std", "networkx-std", "orientdb-std", "dex-std", "titan-std", "neo4j-std"],
 				  title: {
 				      text: 'Graph Package'
 				  }
@@ -25,14 +25,14 @@
 			      yAxis: {
 				  type: 'logarithmic',
 				  title: {
-				      text: 'Memory Usage (KB)'
+				      text: 'Time (s)'
 				  }
 			      },
 			      legend: {
 				enabled: false
 			      },
 			      series: [{
-				data: [{"y": 8376, "color": "navy"}, {"y": 9504, "color": "navy"}, {"y": 15308, "color": "gold"}, {"y": 15608, "color": "navy"}, {"y": 17124, "color": "navy"}, {"y": 44576, "color": "navy"}, {"y": 89968, "color": "navy"}, {"y": 1824404, "color": "navy"}, {"y": 2461448, "color": "navy"}],
+				data: [{"y": 0.07286487, "color": "gold"}, {"y": 0.7406242, "color": "navy"}, {"y": 5.317521, "color": "navy"}, {"y": 13.95524, "color": "navy"}, {"y": 63.94205617904663, "color": "navy"}, {"y": 67.302445178, "color": "navy"}, {"y": 79.96581, "color": "navy"}, {"y": 876.180867265, "color": "navy"}, {"y": 1819.30387686, "color": "navy"}],
 				dataLabels: {
 				  enabled: true,
 				},
