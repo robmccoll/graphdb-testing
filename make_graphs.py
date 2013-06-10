@@ -1,6 +1,8 @@
 import sys
 import json
 
+#this is my test comment
+
 charts = [
   {
     "name":"build",
