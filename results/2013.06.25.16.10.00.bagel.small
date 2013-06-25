@@ -1,0 +1,29 @@
+{
+    "mem": 242929,
+    "na": 100000,
+    "ne": 504364,
+    "nv": 32768,
+    "results": {
+        "build": {
+            "name": "bagel",
+            "time": 0.729053531
+        },
+        "pr": {
+            "name": "bagel",
+            "time": 102.895300798
+        },
+        "sssp": {
+            "name": "bagel",
+            "time": 11.445897632
+        },
+        "sv": {
+            "name": "bagel",
+            "time": 20.306885048
+        },
+        "update": {
+            "name": "bagel",
+            "time": 34332.35748894354
+        }
+    },
+    "type": "bagel"
+}
