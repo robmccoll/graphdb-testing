@@ -1,0 +1,13 @@
+How to replicate our experiments:
+
+- Copy .java files to giraph-examples/src/main/java/org/apache/giraph/examples/
+- Re-compile giraph
+- Use ./run_tests.sh to run the test suite
+- Use ./parse_output.sh to convert .err files to JSON output
+
+Note that SimplePageRankComputation.java is an updated version of the example
+already provided with Giraph.  This version correctly sets the initial vertex
+PageRank value.
+
+To compile giraph:  mvn -DskipTests -Phadoop_1.0 package
+
