@@ -1,28 +1,28 @@
 {
-"type":"giraph",
-"nv":32768,
-"ne":504364,
-"results": {
-"build": {
-"name":"giraph",
-"time":1.727
-},
-"sv": {
-"name":"giraph",
-"time":2.225
-},
-"sssp": {
-"name":"giraph",
-"time":3.514
-},
-"pr": {
-"name":"giraph",
-"time":16.884
-},
-"update": {
-"name":"giraph",
-"time":106723.585
-}
-},
-"na":100000
+    "na": 100000,
+    "ne": 504364,
+    "nv": 32768,
+    "results": {
+        "build": {
+            "name": "giraph",
+            "time": 1.727
+        },
+        "pr": {
+            "name": "giraph",
+            "time": 16.884
+        },
+        "sssp": {
+            "name": "giraph",
+            "time": 3.514
+        },
+        "sv": {
+            "name": "giraph",
+            "time": 2.225
+        },
+        "update": {
+            "name": "giraph",
+            "time": 106723.585
+        }
+    },
+    "type": "giraph"
 }

@@ -1,27 +1,27 @@
 {
-"type":"pegasus",
-"nv":1048576,
-"ne":16571375,
-"results": {
-"build": {
-"name":"pegasus"
-},
-"sv": {
-"name":"pegasus",
-"time":666.765
-},
-"sssp": {
-"name":"pegasus",
-"time":407.174
-},
-"pr": {
-"name":"pegasus",
-"time":4131.274
-},
-"update": {
-"name":"pegasus",
-"time":34331.722
-}
-},
-"na":937668
+    "na": 937668,
+    "ne": 16571375,
+    "nv": 1048576,
+    "results": {
+        "build": {
+            "name": "pegasus"
+        },
+        "pr": {
+            "name": "pegasus",
+            "time": 4131.274
+        },
+        "sssp": {
+            "name": "pegasus",
+            "time": 407.174
+        },
+        "sv": {
+            "name": "pegasus",
+            "time": 666.765
+        },
+        "update": {
+            "name": "pegasus",
+            "time": 34331.722
+        }
+    },
+    "type": "pegasus"
 }
