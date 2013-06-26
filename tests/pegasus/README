@@ -1,0 +1,7 @@
+How to replicate our experiments:
+
+- Copy algorithm folders to PEGASUS/src/pegasus/
+- Add "src/pegasus/sssp:src/pegasus/insertremove" to build_pegasus.xml src.dir
+- Re-build pegasus
+- Use ./run_tests.sh to run the test suite
+
