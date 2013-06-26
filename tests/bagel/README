@@ -1,0 +1,5 @@
+How to replicate our experiments:
+
+- Copy App.scala to spark-0.7.0/bagel/src/main/scala/spark/bagel/examples/
+- Re-compile spark: "sbt/sbt update; sbt/sbt assembly"
+- Run the tests using ./run spark.bagel.examples.App <graph_file> <action_file> <spark server address>
