@@ -1,0 +1,27 @@
+{
+    "na": 937593,
+    "ne": 267069269,
+    "nv": 16777216,
+    "results": {
+        "build": {
+            "name": "pegasus"
+        },
+        "pr": {
+            "name": "pegasus",
+            "time": 4683.674
+        },
+        "sssp": {
+            "name": "pegasus",
+            "time": 825.802
+        },
+        "sv": {
+            "name": "pegasus",
+            "time": 2385.733
+        },
+        "update": {
+            "name": "pegasus",
+            "time": 11231.08
+        }
+    },
+    "type": "pegasus"
+}
