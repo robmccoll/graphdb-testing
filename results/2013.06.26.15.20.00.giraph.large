@@ -1,0 +1,28 @@
+{
+"type":"giraph",
+"nv":16777216,
+"ne":267069269,
+"results": {
+"build": {
+"name":"giraph",
+"time":20.399
+},
+"sv": {
+"name":"giraph",
+"time":47.636
+},
+"sssp": {
+"name":"giraph",
+"time":29.621
+},
+"pr": {
+"name":"giraph",
+"time":2949.353
+},
+"update": {
+"name":"giraph",
+"time":279642.058
+}
+},
+"na":1000000
+}
