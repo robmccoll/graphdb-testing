@@ -1,0 +1,53 @@
+
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>Update Rate</title>
+
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+		<script type="text/javascript">
+		    $(function () {
+			  $('#container').highcharts({
+			      chart: {
+				  type: 'column',
+				  zoomType: 'xy'
+			      },
+			      title: {
+				  text: 'Update Rate'
+			      },
+			      xAxis: {
+				  categories: ["networkx-std", "orientdb-std", "titan-std", "neo4j-std", "pegasus", "sqlite-std", "dex-std", "bagel", "giraph", "boost-std", "stinger-std", "mtgl-insertonly"],
+				  title: {
+				      text: 'Graph Package'
+				  }
+			      },
+			      yAxis: {
+				  type: 'logarithmic',
+				  title: {
+				      text: 'Edges per Second'
+				  }
+			      },
+			      legend: {
+				enabled: false
+			      },
+			      series: [{
+				data: [{"y": 0.36565518379211426, "color": "navy"}, {"y": 1761.1453080843814, "color": "navy"}, {"y": 2217.7437683641415, "color": "navy"}, {"y": 2299.9622243900435, "color": "navy"}, {"y": 4630.111, "color": "navy"}, {"y": 12553.54, "color": "navy"}, {"y": 29570.32, "color": "navy"}, {"y": 53664.20665381908, "color": "navy"}, {"y": 64766.839, "color": "navy"}, {"y": 2101755.0, "color": "navy"}, {"y": 2455779.0, "color": "gold"}, {"y": 3085862.0, "color": "navy"}],
+				dataLabels: {
+				  enabled: true,
+				},
+			      }]
+			  });
+		      });
+		</script>
+	</head>
+	<body>
+<script src="js/highcharts.js"></script>
+<script src="js/modules/exporting.js"></script>
+
+<div id="container" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
+
+	</body>
+</html>
+  
+  

@@ -1,0 +1,53 @@
+
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>Connected Components</title>
+
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+		<script type="text/javascript">
+		    $(function () {
+			  $('#container').highcharts({
+			      chart: {
+				  type: 'column',
+				  zoomType: 'xy'
+			      },
+			      title: {
+				  text: 'Connected Components'
+			      },
+			      xAxis: {
+				  categories: ["stinger-std", "mtgl-std", "boost-std", "networkx-std", "giraph", "neo4j-std", "dex-std", "titan-std", "orientdb-std", "bagel", "sqlite-std", "pegasus"],
+				  title: {
+				      text: 'Graph Package'
+				  }
+			      },
+			      yAxis: {
+				  type: 'logarithmic',
+				  title: {
+				      text: 'Time (s)'
+				  }
+			      },
+			      legend: {
+				enabled: false
+			      },
+			      series: [{
+				data: [{"y": 0.01117737, "color": "gold"}, {"y": 0.05071163, "color": "navy"}, {"y": 0.06861806, "color": "navy"}, {"y": 0.18477296829223633, "color": "navy"}, {"y": 2.225, "color": "navy"}, {"y": 5.753504099, "color": "navy"}, {"y": 7.762666, "color": "navy"}, {"y": 8.401171187, "color": "navy"}, {"y": 9.733640476, "color": "navy"}, {"y": 20.306885048, "color": "navy"}, {"y": 163.9613, "color": "navy"}, {"y": 421.336, "color": "navy"}],
+				dataLabels: {
+				  enabled: true,
+				},
+			      }]
+			  });
+		      });
+		</script>
+	</head>
+	<body>
+<script src="js/highcharts.js"></script>
+<script src="js/modules/exporting.js"></script>
+
+<div id="container" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
+
+	</body>
+</html>
+  
+  

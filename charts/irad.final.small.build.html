@@ -1,0 +1,53 @@
+
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>Initial Graph Construction</title>
+
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+		<script type="text/javascript">
+		    $(function () {
+			  $('#container').highcharts({
+			      chart: {
+				  type: 'column',
+				  zoomType: 'xy'
+			      },
+			      title: {
+				  text: 'Initial Graph Construction'
+			      },
+			      xAxis: {
+				  categories: ["pegasus-NA", "stinger-std", "boost-std", "mtgl-std", "sqlite-std", "bagel", "giraph", "networkx-std", "titan-std", "dex-std", "neo4j-std", "orientdb-std"],
+				  title: {
+				      text: 'Graph Package'
+				  }
+			      },
+			      yAxis: {
+				  type: 'logarithmic',
+				  title: {
+				      text: 'Time (s)'
+				  }
+			      },
+			      legend: {
+				enabled: false
+			      },
+			      series: [{
+				data: [{"y": 0, "color": "navy"}, {"y": 0.05961591, "color": "gold"}, {"y": 0.1144311, "color": "navy"}, {"y": 0.1735096, "color": "navy"}, {"y": 0.6192615, "color": "navy"}, {"y": 0.729053531, "color": "navy"}, {"y": 1.727, "color": "navy"}, {"y": 2.1208879947662354, "color": "navy"}, {"y": 6.445065874, "color": "navy"}, {"y": 7.643547, "color": "navy"}, {"y": 11.853016039, "color": "navy"}, {"y": 58.956729105, "color": "navy"}],
+				dataLabels: {
+				  enabled: true,
+				},
+			      }]
+			  });
+		      });
+		</script>
+	</head>
+	<body>
+<script src="js/highcharts.js"></script>
+<script src="js/modules/exporting.js"></script>
+
+<div id="container" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
+
+	</body>
+</html>
+  
+  

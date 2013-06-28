@@ -1,3 +1,8 @@
+"sysconfig" : {
+  "cpu" : "AMD Opteron(tm) Processor 6282 SE              ",
+  "sockets": "4",
+  "mem" : "264154496 kB"
+}
 {
     "na": 100000,
     "ne": 504364,
@@ -24,5 +29,6 @@
             "time": 106723.585
         }
     },
+    "mem": 0,
     "type": "giraph"
 }

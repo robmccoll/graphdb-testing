@@ -1,0 +1,53 @@
+
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>Single Source Shortest Path</title>
+
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+		<script type="text/javascript">
+		    $(function () {
+			  $('#container').highcharts({
+			      chart: {
+				  type: 'column',
+				  zoomType: 'xy'
+			      },
+			      title: {
+				  text: 'Single Source Shortest Path'
+			      },
+			      xAxis: {
+				  categories: ["stinger-std", "boost-std", "giraph", "mtgl-std", "pegasus"],
+				  title: {
+				      text: 'Graph Package'
+				  }
+			      },
+			      yAxis: {
+				  type: 'logarithmic',
+				  title: {
+				      text: 'Time (s)'
+				  }
+			      },
+			      legend: {
+				enabled: false
+			      },
+			      series: [{
+				data: [{"y": 7.346536, "color": "gold"}, {"y": 11.3736, "color": "navy"}, {"y": 29.621, "color": "navy"}, {"y": 127.0607, "color": "navy"}, {"y": 825.802, "color": "navy"}],
+				dataLabels: {
+				  enabled: true,
+				},
+			      }]
+			  });
+		      });
+		</script>
+	</head>
+	<body>
+<script src="js/highcharts.js"></script>
+<script src="js/modules/exporting.js"></script>
+
+<div id="container" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
+
+	</body>
+</html>
+  
+  

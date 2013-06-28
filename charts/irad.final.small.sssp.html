@@ -1,0 +1,53 @@
+
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>Single Source Shortest Path</title>
+
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+		<script type="text/javascript">
+		    $(function () {
+			  $('#container').highcharts({
+			      chart: {
+				  type: 'column',
+				  zoomType: 'xy'
+			      },
+			      title: {
+				  text: 'Single Source Shortest Path'
+			      },
+			      xAxis: {
+				  categories: ["boost-std", "stinger-std", "mtgl-std", "networkx-std", "sqlite-std", "titan-std", "neo4j-std", "dex-std", "orientdb-std", "giraph", "bagel", "pegasus"],
+				  title: {
+				      text: 'Graph Package'
+				  }
+			      },
+			      yAxis: {
+				  type: 'logarithmic',
+				  title: {
+				      text: 'Time (s)'
+				  }
+			      },
+			      legend: {
+				enabled: false
+			      },
+			      series: [{
+				data: [{"y": 0.01088023, "color": "navy"}, {"y": 0.01695472, "color": "gold"}, {"y": 0.1010599, "color": "navy"}, {"y": 0.17392420768737793, "color": "navy"}, {"y": 0.1951342, "color": "navy"}, {"y": 0.71539293, "color": "navy"}, {"y": 0.963882457, "color": "navy"}, {"y": 2.157558, "color": "navy"}, {"y": 2.475516916, "color": "navy"}, {"y": 3.514, "color": "navy"}, {"y": 11.445897632, "color": "navy"}, {"y": 276.113, "color": "navy"}],
+				dataLabels: {
+				  enabled: true,
+				},
+			      }]
+			  });
+		      });
+		</script>
+	</head>
+	<body>
+<script src="js/highcharts.js"></script>
+<script src="js/modules/exporting.js"></script>
+
+<div id="container" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
+
+	</body>
+</html>
+  
+  

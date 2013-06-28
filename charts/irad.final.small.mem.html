@@ -1,0 +1,53 @@
+
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>Memory Usage</title>
+
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+		<script type="text/javascript">
+		    $(function () {
+			  $('#container').highcharts({
+			      chart: {
+				  type: 'column',
+				  zoomType: 'xy'
+			      },
+			      title: {
+				  text: 'Memory Usage'
+			      },
+			      xAxis: {
+				  categories: ["giraph", "pegasus", "sqlite", "dex", "stinger", "mtgl", "boost", "bagel", "titan", "networkx", "neo4j", "orientdb"],
+				  title: {
+				      text: 'Graph Package'
+				  }
+			      },
+			      yAxis: {
+				  type: 'logarithmic',
+				  title: {
+				      text: 'Memory Usage (KB)'
+				  }
+			      },
+			      legend: {
+				enabled: false
+			      },
+			      series: [{
+				data: [{"y": 0, "color": "navy"}, {"y": 0, "color": "navy"}, {"y": 9504, "color": "navy"}, {"y": 44868, "color": "navy"}, {"y": 61768, "color": "gold"}, {"y": 63436, "color": "navy"}, {"y": 67228, "color": "navy"}, {"y": 242929, "color": "navy"}, {"y": 398384, "color": "navy"}, {"y": 740184, "color": "navy"}, {"y": 1117045, "color": "navy"}, {"y": 10425518, "color": "navy"}],
+				dataLabels: {
+				  enabled: true,
+				},
+			      }]
+			  });
+		      });
+		</script>
+	</head>
+	<body>
+<script src="js/highcharts.js"></script>
+<script src="js/modules/exporting.js"></script>
+
+<div id="container" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
+
+	</body>
+</html>
+  
+  

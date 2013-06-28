@@ -1,10 +1,16 @@
+"sysconfig" : {
+  "cpu" : "AMD Opteron(tm) Processor 6282 SE              ",
+  "sockets": "4",
+  "mem" : "264154496 kB"
+}
 {
     "na": 93684,
     "ne": 504364,
     "nv": 32768,
     "results": {
         "build": {
-            "name": "pegasus"
+            "name": "pegasus-NA",
+	    "time": 0
         },
         "pr": {
             "name": "pegasus",
@@ -23,5 +29,6 @@
             "time": 4616.34
         }
     },
+    "mem": 0,
     "type": "pegasus"
 }
