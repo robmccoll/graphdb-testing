@@ -78,3 +78,25 @@ are listed below:
 
 For the tiny and small graphs, 100,000 edge updates will be used.  For the medium and large graphs, 
 1,000,000 edge updates will be used. Results will be normalized to edges per second.
+
+Submitting Your Own Results
+===========================
+
+We highly encourage package maintainers and interested individuals to submit your own implementations and results via pull request (and hope that the work done so far may motivate you to do so).  Perhaps together we can asymptotically approach a somewhat 'fair' comparison.  
+
+Ideally submissions should include details about the systems / architectures used, algorithm and implementation choices (i.e. whether or not the prescribed implementation style was used). Results and code not following the same style will still be accepted as we'd rather be more inclusive as long as everything is clearly indicated. Using the same implementation style was intended to show the performance
+of algorithms following a given style of computation (edge parallel, BSP,
+breadth-first traversal, etc.), so if you can include some information
+about why that style of compute is not a great fit for the architecture or
+not possible, that would be ideal.  The primary goal is that results are reproducible assuming the same system and configuration following configuration information and code in the submission
+
+
+Results for any size / scale graph are acceptable.   Unfortunately, we couldn't get a lot of the
+packages to scale without running out of memory or
+taking more than 24 hours to compute, so we determined that even the
+relatively small quarter billion edge graph was enough to complete the
+comparison.  The designations were chosen for referential convenience (a
+'huge' multi-billion-edge graph was used for a handful of tests with a
+package or two with plans for a 'massive' multi-billion-vertex graph
+tabled), so feel free to follow these conventions or create your own.
+
